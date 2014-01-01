@@ -1,5 +1,5 @@
 /**
- * http://aeqdev.com/tools/php/abigimage/
+ * http://aeqdev.com/tools/js/abigimage/
  * v 1.0
  *
  * Copyright © 2013 Krylosov Maksim <Aequiternus@gmail.com>
