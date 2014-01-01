@@ -1,0 +1,301 @@
+<!doctype html>
+<html>
+    <head>
+        <title>ABigImage | js | tools | aeqdev.com</title>
+        <meta charset="UTF-8">
+        <link id="stylesheet" rel="stylesheet" href="http://aeqdev.com/tools/css/default/adefault-light.min.css">
+        <link id="stylesheet-prettify" rel="stylesheet" href="http://aeqdev.com/tools/js/easyprettyprint/google-code-prettify-light.css">
+        <meta name="description" content="ABigImage is jQuery plugin for viewing big versions of images.">
+        <style>
+            body
+            {
+                font-family: Arial, sans-serif;
+                margin: 4.5em 0 1.5em;
+                padding: 0;
+            }
+
+            .wrapper
+            {
+                width: 200mm;
+                margin: 0 auto;
+                padding: 0 1.5em;
+            }
+
+            .menu
+            {
+                z-index: 1;
+                position: fixed;
+                height: 3em;
+                line-height: 3em;
+                top: 0px;
+                background: #404040;
+                width: 100%;
+                font-weight: bold;
+                box-shadow: 0 0 1em #404040;
+            }
+
+            .menu a
+            {
+                display: inline-block;
+                color: #fff;
+                padding: 0 1ex;
+            }
+
+            .menu a:hover, .menu a.active
+            {
+                background-color: #c0c0c0;
+                color: #000;
+            }
+
+            a.logo
+            {
+                color: #c0c0c0;
+                text-decoration: none;
+                text-shadow: 0 0 1ex #000;
+            }
+
+            a:hover.logo
+            {
+                background: none;
+                color: #c0c0c0;
+                text-shadow: 0 0 1em #808080;
+            }
+
+            a.logo em
+            {
+                color: #80c0f0;
+                font-style: normal;
+            }
+
+            .like
+            {
+                margin-bottom: 1.5em;
+                height: 20px;
+            }
+
+            .like > *
+            {
+                float: left;
+                width: 20%;
+            }
+        </style>
+        <script src="http://aeqdev.com/tools/js/easyprettyprint/EasyPrettyPrint.js"></script>
+        <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+        <script src="abigimage.jquery.js"></script>
+        <script>
+            $(function() {
+                $('a[href$=".jpg"]').abigimage({
+                    bottomCSS: {
+                        fontSize: '2em',
+                        textAlign: 'center'
+                    },
+                    onopen: function (target) {
+                        this.bottom.html(
+                            $(target).attr('title')
+                        );
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+
+        <div class="menu">
+            <div class="wrapper">
+                <a class="logo" href="/"><em>Aeq</em>dev</a>
+            </div>
+        </div>
+
+        <div class="wrapper">
+
+
+
+<h1>ABigImage</h1>
+
+<p>ABigImage is jQuery plugin for viewing big versions of images.</p>
+
+
+
+<ul>
+    <li><a href="abigimage.jquery.js">abigimage.jquery.js</a> (5.9Kb)</li>
+    <li><a href="abigimage.jquery.min.js">abigimage.jquery.min.js</a> (3.4Kb)</li>
+</ul>
+
+
+
+<h2>Features</h2>
+
+<ul>
+<li>Uses link's <code>href</code> attribute for large images.</li>
+<li>Clicking image opens next one, clicking left side opens previous, clicking right side closes image.</li>
+<li>Closing after viewing of all images.</li>
+<li>Preloading of next and previous images.</li>
+<li>Fully customizable styles.</li>
+<li>Customizable top and bottom areas.</li>
+<li>Customizable <code>onopen</code> event.</li>
+</ul>
+
+
+
+<h2>Example</h2>
+
+<p>
+    <a href="img/1-big.jpg" title="First image"><img src="img/1-small.jpg"></a>
+    <a href="img/2-big.jpg" title="Second image"><img src="img/2-small.jpg"></a>
+    <a href="img/3-big.jpg" title="Third image"><img src="img/3-small.jpg"></a>
+
+
+
+<div class="like">
+    <div>
+        <iframe src="http://ghbtns.com/github-btn.html?user=Aequiternus&amp;repo=abigimage&amp;type=watch&amp;count=true"
+            allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
+    </div>
+    <div>
+        <div class="g-plusone" data-size="medium" data-width="100" data-href="http://aeqdev.com/tools/js/abigimage/"></div>
+        <script type="text/javascript">
+          (function() {
+            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+            po.src = 'https://apis.google.com/js/plusone.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+          })();
+        </script>
+    </div>
+    <div>
+        <script type="text/javascript" src="//vk.com/js/api/openapi.js?101"></script>
+        <script type="text/javascript">VK.init({apiId: 3941815, onlyWidgets: true});</script>
+        <div id="vk_like"></div>
+        <script type="text/javascript">VK.Widgets.Like("vk_like", {type: "mini", height: 20, width: 100});</script>
+    </div>
+    <div>
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+        <div class="fb-like" data-href="http://aeqdev.com/tools/js/abigimage/" data-width="100" data-height="20" data-colorscheme="light" data-layout="button_count" data-action="like" data-show-faces="true" data-send="false"></div>
+    </div>
+    <div>
+        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://aeqdev.com/tools/js/abigimage/" data-via="twitterapi" data-lang="en">Tweet</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </div>
+</div>
+
+
+
+<h2>Usage</h2>
+
+<h3>Basic</h3>
+
+<p>Add jQuery and ABigImage scripts in head of page.</p>
+
+<pre><code>&lt;script src="jquery.js"&gt;&lt;/script&gt;
+&lt;script src="abigimage.jquery.js"&gt;&lt;/script&gt;
+</code></pre>
+
+<p>Call plugin on selector of enlargeable images links.</p>
+
+<pre><code>&lt;script&gt;
+    $(function() {
+        $('a[href$=".jpg"]').abigimage();
+    });
+&lt;/script&gt;
+</code></pre>
+
+<h3>Options</h3>
+
+<ul>
+<li><code>fadeIn</code> - fade in duration or <a href="http://api.jquery.com/fadein/">options</a>.</li>
+<li><code>fadeOut</code> - fade out duration or <a href="http://api.jquery.com/fadeout/">options</a>.</li>
+<li><code>prevBtnHtml</code> - html of "previous" button.</li>
+<li><code>closeBtnHtml</code> - html of "close" button.</li>
+<li><code>onopen</code> - function called when image opens.</li>
+<li><code>*Attrs</code> - plugin elements attributes.</li>
+<li><code>*CSS</code> - plugin elements CSS.</li>
+</ul>
+
+<p>Plugin generates next html code:</p>
+
+<pre><code>&lt;!-- overlay --&gt;
+&lt;div&gt;&lt;/div&gt;
+&lt;!-- layout --&gt;
+&lt;div&gt;
+    &lt;!-- wrapper --&gt;
+    &lt;div&gt;
+        &lt;!-- box --&gt;
+        &lt;div&gt;
+            &lt;!-- prevBtn --&gt;
+            &lt;div&gt;&lt;!-- prevBtnHtml --&gt;&lt;/div&gt;
+            &lt;!-- body --&gt;
+            &lt;div&gt;
+                &lt;!-- top --&gt;
+                &lt;div&gt;&lt;/div&gt;
+                &lt;!-- img --&gt;
+                &lt;img&gt;
+                &lt;!-- imgNext --&gt;
+                &lt;img&gt;
+                &lt;!-- imgPrev --&gt;
+                &lt;img&gt;
+                &lt;!-- bottom --&gt;
+                &lt;div&gt;&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;!-- closeBtn --&gt;
+            &lt;div&gt;&lt;!-- closeBtnHtml --&gt;&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h3>Using onopen handler</h3>
+
+<p>Function, defined as <code>onopen</code> handler, executes in context of plugin, and receives target element as argument. Plugin elements available in this context as properties.</p>
+
+<pre><code>&lt;script&gt;
+    $(function() {
+        $('a[href$=".jpg"]').abigimage({
+            bottomCSS: {
+                fontSize: '2em',
+                textAlign: 'center'
+            },
+            onopen: function (target) {
+                this.bottom.html(
+                    $(target).attr('title')
+                );
+            }
+        });
+    });
+&lt;/script&gt;
+</code></pre>
+
+
+
+<p>I WANT your comments, feature requests, bug reports, suggestions, thoughts... on <a href="https://github.com/Aequiternus/AParser">GitHub</a>.</p>
+
+
+
+<script>EasyPrettyPrint()</script>
+
+<p>&nbsp;
+
+
+
+        </div>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-11259339-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+    </body>
+</html>
