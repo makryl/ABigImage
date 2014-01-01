@@ -80,22 +80,18 @@ Plugin generates next html code:
 
 Function, defined as `onopen` handler, executes in context of plugin, and receives target element as argument. Plugin elements available in this context as properties.
 
-```html
-<script>
-    $(function() {
-        $('a[href$=".jpg"]').abigimage({
-            bottomCSS: {
-                fontSize: '2em',
-                textAlign: 'center'
-            },
-            onopen: function (target) {
-                this.bottom.html(
-                    $(target).attr('title')
-                );
-            }
-        });
-    });
-</script>
+```js
+$('a[href$=".jpg"]').abigimage({
+    bottomCSS: {
+        fontSize: '2em',
+        textAlign: 'center'
+    },
+    onopen: function (target) {
+        this.bottom.html(
+            $(target).attr('title')
+        );
+    }
+});
 ```
 
 ## License
