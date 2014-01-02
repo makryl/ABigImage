@@ -6,6 +6,7 @@
 
 - Uses link's `href` attribute for large images.
 - Clicking image opens next one, clicking left side opens previous, clicking right side closes image.
+- Hotkeys for next, previous and close buttons.
 - Closing after viewing of all images.
 - Preloading of next and previous images.
 - Fully customizable styles.
@@ -39,6 +40,9 @@ Call plugin on selector of enlargeable images links.
 - `fadeOut` - fade out duration or [options](http://api.jquery.com/fadeout/).
 - `prevBtnHtml` - html of "previous" button.
 - `closeBtnHtml` - html of "close" button.
+- `keyNext` - hotkeys for "next" button (by default: 13 enter, 32 space, 39 right, 40 down).
+- `keyPrev` - hotkeys for "previous" button (by default: 8 backspace, 37 left, 38 up).
+- `keyNext` - hotkeys for "close" button (by default: 27 escape, 35 end, 36 home).
 - `onopen` - function called when image opens.
 - `*Attrs` - plugin elements attributes.
 - `*CSS` - plugin elements CSS.
@@ -90,7 +94,7 @@ Function, defined as `onopen` handler, executes in context of plugin, and receiv
             },
             onopen: function (target) {
                 this.bottom.html(
-                    $(target).attr('title')
+                    $('img', target).attr('alt')
                 );
             }
         });

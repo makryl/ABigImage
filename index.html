@@ -91,7 +91,7 @@
                     },
                     onopen: function (target) {
                         this.bottom.html(
-                            $(target).attr('title')
+                            $('img', target).attr('alt')
                         );
                     }
                 });
@@ -117,8 +117,8 @@
 
 
 <ul>
-    <li><a href="abigimage.jquery.js">abigimage.jquery.js</a> (5.9Kb)</li>
-    <li><a href="abigimage.jquery.min.js">abigimage.jquery.min.js</a> (3.4Kb)</li>
+    <li><a href="abigimage.jquery.js">abigimage.jquery.js</a> (6.8Kb)</li>
+    <li><a href="abigimage.jquery.min.js">abigimage.jquery.min.js</a> (3.6Kb)</li>
 </ul>
 
 
@@ -128,6 +128,7 @@
 <ul>
 <li>Uses link's <code>href</code> attribute for large images.</li>
 <li>Clicking image opens next one, clicking left side opens previous, clicking right side closes image.</li>
+<li>Hotkeys for next, previous and close buttons.</li>
 <li>Closing after viewing of all images.</li>
 <li>Preloading of next and previous images.</li>
 <li>Fully customizable styles.</li>
@@ -140,9 +141,9 @@
 <h2>Example</h2>
 
 <p>
-    <a href="img/1-big.jpg" title="First image"><img src="img/1-small.jpg"></a>
-    <a href="img/2-big.jpg" title="Second image"><img src="img/2-small.jpg"></a>
-    <a href="img/3-big.jpg" title="Third image"><img src="img/3-small.jpg"></a>
+    <a href="img/1-big.jpg"><img src="img/1-small.jpg" alt="First image"></a>
+    <a href="img/2-big.jpg"><img src="img/2-small.jpg" alt="Second image"></a>
+    <a href="img/3-big.jpg"><img src="img/3-small.jpg" alt="Third image"></a>
 
 
 
@@ -212,6 +213,9 @@
 <li><code>fadeOut</code> - fade out duration or <a href="http://api.jquery.com/fadeout/">options</a>.</li>
 <li><code>prevBtnHtml</code> - html of "previous" button.</li>
 <li><code>closeBtnHtml</code> - html of "close" button.</li>
+<li><code>keyNext</code> - hotkeys for "next" button (by default: 13 enter, 32 space, 39 right, 40 down).</li>
+<li><code>keyPrev</code> - hotkeys for "previous" button (by default: 8 backspace, 37 left, 38 up).</li>
+<li><code>keyNext</code> - hotkeys for "close" button (by default: 27 escape, 35 end, 36 home).</li>
 <li><code>onopen</code> - function called when image opens.</li>
 <li><code>*Attrs</code> - plugin elements attributes.</li>
 <li><code>*CSS</code> - plugin elements CSS.</li>
@@ -262,7 +266,7 @@
             },
             onopen: function (target) {
                 this.bottom.html(
-                    $(target).attr('title')
+                    $('img', target).attr('alt')
                 );
             }
         });
@@ -276,7 +280,7 @@
 
 
 
-<script>EasyPrettyPrint()</script>
+<script>EasyPrettyPrint();</script>
 
 <p>&nbsp;
 

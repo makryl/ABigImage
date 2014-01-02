@@ -1,6 +1,6 @@
 /**
  * http://aeqdev.com/tools/js/abigimage/
- * v 1.0
+ * v 1.1
  *
  * Copyright © 2014 Krylosov Maksim <Aequiternus@gmail.com>
  *
@@ -48,22 +48,44 @@
             return j;
         }
 
+        function next() {
+            if (d === t.length - 1) {
+                return close();
+            } else {
+                ++d;
+                return open(nextI());
+            }
+        }
+
+        function prev() {
+            if (d === 1 - t.length) {
+                return close();
+            } else {
+                --d;
+                return open(prevI());
+            }
+        }
+
+        function key(event) {
+            if (opts.keyNext.indexOf(event.which) !== -1) {
+                event.preventDefault();
+                next();
+            } else if (opts.keyPrev.indexOf(event.which) !== -1) {
+                event.preventDefault();
+                prev();
+            } else if (opts.keyClose.indexOf(event.which) !== -1) {
+                event.preventDefault();
+                close();
+            }
+        }
+
         function close() {
             d = 0;
             t.overlay.fadeOut(opts.fadeOut);
             t.layout.fadeOut(opts.fadeOut);
+            $(document).unbind('keydown', key);
             return false;
         }
-
-        function next() {
-            ++d;
-            return open(nextI());
-        };
-
-        function prev() {
-            --d;
-            return open(prevI());
-        };
 
         function open(openI) {
             if (openI < 0 || openI > t.length - 1) {
@@ -73,28 +95,8 @@
             i = openI;
 
             t.img.attr('src', $(t[i]).attr('href'));
-
-            if (d === t.length - 1) {
-                t.img.unbind('click').click(function() {
-                    return close();
-                });
-            } else {
-                t.imgNext.attr('src', $(t[nextI()]).attr('href'));
-                t.img.unbind('click').click(function() {
-                    return next();
-                });
-            }
-
-            if (d === 1 - t.length) {
-                t.prevBtn.unbind('click').click(function() {
-                    return close();
-                });
-            } else {
-                t.imgPrev.attr('src', $(t[prevI()]).attr('href'));
-                t.prevBtn.unbind('click').click(function() {
-                    return prev();
-                });
-            }
+            t.imgNext.attr('src', $(t[nextI()]).attr('href'));
+            t.imgPrev.attr('src', $(t[prevI()]).attr('href'));
 
             t.overlay.fadeIn(opts.fadeIn);
             t.layout.fadeIn(opts.fadeIn);
@@ -103,10 +105,20 @@
                 height: $(window).height() + 'px'
             });
 
+            $(document).unbind('keydown', key).bind('keydown', key);
+
             opts.onopen.call(t, t[i]);
 
             return false;
         }
+
+        this.img.click(function() {
+            return next();
+        });
+
+        this.prevBtn.click(function() {
+            return prev();
+        });
 
         this.closeBtn.click(function() {
             return close();
@@ -144,9 +156,13 @@
         prevBtnHtml:        '◄',
         nextBtnHtml:        '✖',
 
+        keyNext:            [13 /* enter */, 32 /* space */, 39 /* right */, 40 /* down */],
+        keyPrev:            [8 /* backspace */, 37 /* left */, 38 /* up */],
+        keyClose:           [27 /* escape */, 35 /* end */, 36 /* home */],
+
         onopen:             function() {},
 
-        overlayCSS:         {backgroundColor: '#404040', zIndex: 2, position: 'fixed', left: 0, top: 0, width: '100%', height: '100%', display: 'none'},
+        overlayCSS:         {backgroundColor: '#404040', opacity: 0.925, zIndex: 2, position: 'fixed', left: 0, top: 0, width: '100%', height: '100%', display: 'none'},
         layoutCSS:          {zIndex: 2, position: 'absolute', top: 0, left: 0, width: '100%', margin: '0 auto', display: 'none',
                                 '-webkit-user-select': 'none', '-moz-user-select': 'none', 'user-select': 'none'},
         wrapperCSS:         {display: 'table', width: '100%', height: '100%'},
