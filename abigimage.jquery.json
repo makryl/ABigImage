@@ -1,0 +1,23 @@
+{
+    "name": "abigimage",
+    "version": "1.1.0",
+    "title": "ABigImage - view big versions of images",
+    "author": {
+        "name": "Krylosov Maksim",
+        "email": "aequiternus@gmail.com",
+        "url": "http://aeqdev.com/"
+    },
+    "licenses": [{
+        "type": "Mozilla Public License 2.0 (MPL-2.0)",
+        "url": "http://mozilla.org/MPL/2.0/"
+    }],
+    "dependencies": {
+        "jquery": ">=1.9"
+    },
+    "description": "Uses link's `href` attribute for large images. Clicking image opens next one, clicking left side opens previous, clicking right side closes image. Hotkeys for next, previous and close buttons. Closing after viewing of all images. Preloading of next and previous images. Fully customizable styles. Customizable top and bottom areas. Customizable `onopen` event.",
+    "keywords": ["image", "picture", "photo", "view", "viewer", "big", "large", "enlarge"],
+    "homepage": "http://aeqdev.com/tools/js/abigimage/",
+    "docs": "http://aeqdev.com/tools/js/abigimage/",
+    "demo": "http://aeqdev.com/tools/js/abigimage/",
+    "bugs": "https://github.com/Aequiternus/ABigImage/issues"
+}
