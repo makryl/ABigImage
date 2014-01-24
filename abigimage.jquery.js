@@ -21,7 +21,7 @@
         this.box        = $('<div>').attr(opts.boxAttrs)        .css(opts.boxCSS)       .appendTo(this.wrapper),
         this.prevBtn    = $('<div>').attr(opts.prevBtnAttrs)    .css(opts.prevBtnCSS)   .appendTo(this.box)        .html(opts.prevBtnHtml),
         this.body       = $('<div>').attr(opts.bodyAttrs)       .css(opts.bodyCSS)      .appendTo(this.box),
-        this.closeBtn   = $('<div>').attr(opts.closeBtnAttrs)   .css(opts.closeBtnCSS)  .appendTo(this.box)        .html(opts.nextBtnHtml),
+        this.closeBtn   = $('<div>').attr(opts.closeBtnAttrs)   .css(opts.closeBtnCSS)  .appendTo(this.box)        .html(opts.closeBtnHtml),
         this.top        = $('<div>').attr(opts.topAttrs)        .css(opts.topCSS)       .appendTo(this.body),
         this.img        = $('<img>').attr(opts.imgAttrs)        .css(opts.imgCSS)       .appendTo(this.body),
         this.imgNext    = $('<img>').attr(opts.imgNextAttrs)    .css(opts.imgNextCSS)   .appendTo(this.body),
@@ -154,7 +154,7 @@
         fadeOut:            'fast',
 
         prevBtnHtml:        '◄',
-        nextBtnHtml:        '✖',
+        closeBtnHtml:       '✖',
 
         keyNext:            [13 /* enter */, 32 /* space */, 39 /* right */, 40 /* down */],
         keyPrev:            [8 /* backspace */, 37 /* left */, 38 /* up */],
