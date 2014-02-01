@@ -3,6 +3,8 @@
     <head>
         <title>ABigImage | js | tools | aeqdev.com</title>
         <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link id="stylesheet" rel="stylesheet" href="http://aeqdev.com/tools/css/default/adefault-light.min.css">
         <link id="stylesheet-prettify" rel="stylesheet" href="http://aeqdev.com/tools/js/easyprettyprint/google-code-prettify-light.css">
         <meta name="description" content="ABigImage is jQuery plugin for viewing big versions of images.">
@@ -10,15 +12,15 @@
             body
             {
                 font-family: Arial, sans-serif;
-                margin: 4.5em 0 1.5em;
+                margin-top: 4.5em;
                 padding: 0;
             }
 
             .wrapper
             {
-                width: 200mm;
+                max-width: 200mm;
                 margin: 0 auto;
-                padding: 0 1.5em;
+                padding: 0 1ex;
             }
 
             .menu
@@ -144,48 +146,6 @@
     <a href="img/1-big.jpg"><img src="img/1-small.jpg" alt="First image"></a>
     <a href="img/2-big.jpg"><img src="img/2-small.jpg" alt="Second image"></a>
     <a href="img/3-big.jpg"><img src="img/3-small.jpg" alt="Third image"></a>
-
-
-
-<div class="like">
-    <div>
-        <iframe src="http://ghbtns.com/github-btn.html?user=Aequiternus&amp;repo=abigimage&amp;type=watch&amp;count=true"
-            allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
-    </div>
-    <div>
-        <div class="g-plusone" data-size="medium" data-width="100" data-href="http://aeqdev.com/tools/js/abigimage/"></div>
-        <script type="text/javascript">
-          (function() {
-            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-            po.src = 'https://apis.google.com/js/plusone.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-          })();
-        </script>
-    </div>
-    <div>
-        <script type="text/javascript" src="//vk.com/js/api/openapi.js?101"></script>
-        <script type="text/javascript">VK.init({apiId: 3941815, onlyWidgets: true});</script>
-        <div id="vk_like"></div>
-        <script type="text/javascript">VK.Widgets.Like("vk_like", {type: "mini", height: 20, width: 100});</script>
-    </div>
-    <div>
-        <div id="fb-root"></div>
-        <script>(function(d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0];
-          if (d.getElementById(id)) return;
-          js = d.createElement(s); js.id = id;
-          js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1";
-          fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));</script>
-        <div class="fb-like" data-href="http://aeqdev.com/tools/js/abigimage/" data-width="100" data-height="20" data-colorscheme="light" data-layout="button_count" data-action="like" data-show-faces="true" data-send="false"></div>
-    </div>
-    <div>
-        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://aeqdev.com/tools/js/abigimage/" data-via="twitterapi" data-lang="en">Tweet</a>
-        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </div>
-</div>
-
-
 
 <h2>Usage</h2>
 
