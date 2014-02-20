@@ -11,7 +11,7 @@
 - Closing after viewing of all images.
 - Preloading of next and previous images.
 - Fully customizable styles.
-- Customizable top and bottom areas.
+- Customizable bottom area.
 - Customizable `onopen` event.
 
 ## Usage
