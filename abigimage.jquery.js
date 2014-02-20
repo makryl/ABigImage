@@ -94,9 +94,9 @@
 
             i = openI;
 
-            t.img.stop().fadeOut(opts.fadeOut).attr('src', $(t[i]).attr('href'));
-            t.imgNext.attr('src', $(t[nextI()]).attr('href'));
-            t.imgPrev.attr('src', $(t[prevI()]).attr('href'));
+            t.img.stop().fadeOut(opts.fadeOut)
+                .removeAttr('src') // To re-fire load event if same image opened
+                .attr('src', $(t[i]).attr('href'));
 
             t.overlay.fadeIn(opts.fadeIn);
             t.layout.fadeIn(opts.fadeIn);
@@ -108,12 +108,16 @@
             return false;
         }
 
-        this.img.click(function() {
-            return next();
-        });
-
         this.img.load(function() {
             t.img.stop().fadeIn(opts.fadeIn);
+
+            // preload prev and next images after viewed images loaded
+            t.imgNext.attr('src', $(t[nextI()]).attr('href'));
+            t.imgPrev.attr('src', $(t[prevI()]).attr('href'));
+        });
+
+        this.img.click(function() {
+            return next();
         });
 
         this.prevBtnWrapper.click(function() {
