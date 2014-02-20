@@ -12,60 +12,32 @@
             body
             {
                 font-family: Arial, sans-serif;
-                margin-top: 4.5em;
-                padding: 0;
             }
 
             .wrapper
             {
                 max-width: 200mm;
                 margin: 0 auto;
-                padding: 0 1ex;
-            }
-
-            .menu
-            {
-                z-index: 1;
-                position: fixed;
-                height: 3em;
-                line-height: 3em;
-                top: 0px;
-                background: #404040;
-                width: 100%;
-                font-weight: bold;
-                box-shadow: 0 0 1em #404040;
-            }
-
-            .menu a
-            {
-                display: inline-block;
-                color: #fff;
-                padding: 0 1ex;
-            }
-
-            .menu a:hover, .menu a.active
-            {
-                background-color: #c0c0c0;
-                color: #000;
             }
 
             a.logo
             {
-                color: #c0c0c0;
+                display: block;
+                float: right;
+                color: #808080;
                 text-decoration: none;
-                text-shadow: 0 0 1ex #000;
             }
 
             a:hover.logo
             {
                 background: none;
-                color: #c0c0c0;
-                text-shadow: 0 0 1em #808080;
+                color: #808080;
+                text-decoration: underline;
             }
 
             a.logo em
             {
-                color: #80c0f0;
+                color: #4080c0;
                 font-style: normal;
             }
 
@@ -80,10 +52,6 @@
         <script>
             $(function() {
                 $('a[href$=".jpg"]').abigimage({
-                    bottomCSS: {
-                        fontSize: '2em',
-                        textAlign: 'center'
-                    },
                     onopen: function (target) {
                         this.bottom.html(
                             $('img', target).attr('alt')
@@ -95,13 +63,10 @@
     </head>
     <body>
 
-        <div class="menu">
-            <div class="wrapper">
-                <a class="logo" href="/"><em>Aeq</em>dev</a>
-            </div>
-        </div>
-
         <div class="wrapper">
+
+            <p>
+                <a class="logo" href="/"><em>Aeq</em>dev</a>
 
 
 
@@ -112,8 +77,9 @@
 
 
 <ul>
-    <li><a href="abigimage.jquery.js">abigimage.jquery.js</a> (6.8Kb)</li>
-    <li><a href="abigimage.jquery.min.js">abigimage.jquery.min.js</a> (3.6Kb)</li>
+    <li><a href="abigimage.jquery.js">abigimage.jquery.js</a> (8.4Kb)</li>
+    <li><a href="abigimage.jquery.min.js">abigimage.jquery.min.js</a> (4.6Kb)</li>
+    <li>Project on <a href="https://github.com/Aequiternus/ABigImage">GitHub</a></li>
 </ul>
 
 
@@ -121,14 +87,15 @@
 <h2>Features</h2>
 
 <ul>
-<li>Uses link's <code>href</code> attribute for large images.</li>
-<li>Clicking image opens next one, clicking left side opens previous, clicking right side closes image.</li>
-<li>Hotkeys for next, previous and close buttons.</li>
-<li>Closing after viewing of all images.</li>
-<li>Preloading of next and previous images.</li>
-<li>Fully customizable styles.</li>
-<li>Customizable top and bottom areas.</li>
-<li>Customizable <code>onopen</code> event.</li>
+    <li>Fit mobile devices.</li>
+    <li>Uses link's <code>href</code> attribute for large images.</li>
+    <li>Clicking image opens next one, clicking left side opens previous, clicking right side closes image.</li>
+    <li>Hotkeys for next, previous and close buttons.</li>
+    <li>Closing after viewing of all images.</li>
+    <li>Preloading of next and previous images.</li>
+    <li>Fully customizable styles.</li>
+    <li>Customizable top and bottom areas.</li>
+    <li>Customizable <code>onopen</code> event.</li>
 </ul>
 
 
@@ -139,6 +106,7 @@
     <a href="img/1-big.jpg"><img src="img/1-small.jpg" alt="First image"></a>
     <a href="img/2-big.jpg"><img src="img/2-small.jpg" alt="Second image"></a>
     <a href="img/3-big.jpg"><img src="img/3-small.jpg" alt="Third image"></a>
+    <a href="img/4-big.jpg"><img src="img/4-small.jpg" alt="Fourth image"></a>
 
 <h2>Usage</h2>
 
@@ -180,29 +148,30 @@
 &lt;div&gt;&lt;/div&gt;
 &lt;!-- layout --&gt;
 &lt;div&gt;
-    &lt;!-- wrapper --&gt;
+    &lt;!-- prevBtnWrapper (clickable behind the image, width 50%) --&gt;
     &lt;div&gt;
-        &lt;!-- box --&gt;
+        &lt;!-- prevBtnBox (clickable above the image, button width) --&gt;
         &lt;div&gt;
             &lt;!-- prevBtn --&gt;
             &lt;div&gt;&lt;!-- prevBtnHtml --&gt;&lt;/div&gt;
-            &lt;!-- body --&gt;
-            &lt;div&gt;
-                &lt;!-- top --&gt;
-                &lt;div&gt;&lt;/div&gt;
-                &lt;!-- img --&gt;
-                &lt;img&gt;
-                &lt;!-- imgNext --&gt;
-                &lt;img&gt;
-                &lt;!-- imgPrev --&gt;
-                &lt;img&gt;
-                &lt;!-- bottom --&gt;
-                &lt;div&gt;&lt;/div&gt;
-            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;!-- closeBtnWrapper (clickable behind the image, width 50%) --&gt;
+    &lt;div&gt;
+        &lt;!-- closeBtnBox (clickable above the image, button width) --&gt;
+        &lt;div&gt;
             &lt;!-- closeBtn --&gt;
             &lt;div&gt;&lt;!-- closeBtnHtml --&gt;&lt;/div&gt;
         &lt;/div&gt;
     &lt;/div&gt;
+    &lt;!-- img --&gt;
+    &lt;img&gt;
+    &lt;!-- imgNext --&gt;
+    &lt;img&gt;
+    &lt;!-- imgPrev --&gt;
+    &lt;img&gt;
+    &lt;!-- bottom --&gt;
+    &lt;div&gt;&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
 
@@ -214,8 +183,7 @@
     $(function() {
         $('a[href$=".jpg"]').abigimage({
             bottomCSS: {
-                fontSize: '2em',
-                textAlign: 'center'
+                fontSize: '2em'
             },
             onopen: function (target) {
                 this.bottom.html(
@@ -234,8 +202,6 @@
 
 
 <script>EasyPrettyPrint();</script>
-
-<p>&nbsp;
 
 
 

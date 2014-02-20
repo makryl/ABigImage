@@ -1,8 +1,8 @@
 /**
  * http://aeqdev.com/tools/js/abigimage/
- * v 1.1.1
+ * v 1.2.0
  *
- * Copyright © 2014 Krylosov Maksim <Aequiternus@gmail.com>
+ * Copyright © 2014 Maksim Krylosov <Aequiternus@gmail.com>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -15,18 +15,18 @@
 
         var opts = $.extend(true, $.fn.abigimage.defaults, options);
 
-        this.overlay    = $('<div>').attr(opts.overlayAttrs)    .css(opts.overlayCSS)   .appendTo('body'),
-        this.layout     = $('<div>').attr(opts.layoutAttrs)     .css(opts.layoutCSS)    .appendTo('body'),
-        this.wrapper    = $('<div>').attr(opts.wrapperAttrs)    .css(opts.wrapperCSS)   .appendTo(this.layout),
-        this.box        = $('<div>').attr(opts.boxAttrs)        .css(opts.boxCSS)       .appendTo(this.wrapper),
-        this.prevBtn    = $('<div>').attr(opts.prevBtnAttrs)    .css(opts.prevBtnCSS)   .appendTo(this.box)        .html(opts.prevBtnHtml),
-        this.body       = $('<div>').attr(opts.bodyAttrs)       .css(opts.bodyCSS)      .appendTo(this.box),
-        this.closeBtn   = $('<div>').attr(opts.closeBtnAttrs)   .css(opts.closeBtnCSS)  .appendTo(this.box)        .html(opts.closeBtnHtml),
-        this.top        = $('<div>').attr(opts.topAttrs)        .css(opts.topCSS)       .appendTo(this.body),
-        this.img        = $('<img>').attr(opts.imgAttrs)        .css(opts.imgCSS)       .appendTo(this.body),
-        this.imgNext    = $('<img>').attr(opts.imgNextAttrs)    .css(opts.imgNextCSS)   .appendTo(this.body),
-        this.imgPrev    = $('<img>').attr(opts.imgPrevAttrs)    .css(opts.imgPrevCSS)   .appendTo(this.body),
-        this.bottom     = $('<div>').attr(opts.bottomAttrs)     .css(opts.bottomCSS)    .appendTo(this.body);
+        this.overlay            = $('<div>').attr(opts.overlayAttrs)            .css(opts.overlayCSS)           .appendTo('body');
+        this.layout             = $('<div>').attr(opts.layoutAttrs)             .css(opts.layoutCSS)            .appendTo('body');
+        this.prevBtnWrapper     = $('<div>').attr(opts.prevBtnWrapperAttrs)     .css(opts.prevBtnWrapperCSS)    .appendTo(this.layout);
+        this.prevBtnBox         = $('<div>').attr(opts.prevBtnBoxAttrs)         .css(opts.prevBtnBoxCSS)        .appendTo(this.prevBtnWrapper);
+        this.prevBtn            = $('<div>').attr(opts.prevBtnAttrs)            .css(opts.prevBtnCSS)           .appendTo(this.prevBtnBox)          .html(opts.prevBtnHtml);
+        this.closeBtnWrapper    = $('<div>').attr(opts.closeBtnWrapperAttrs)    .css(opts.closeBtnWrapperCSS)   .appendTo(this.layout);
+        this.closeBtnBox        = $('<div>').attr(opts.closeBtnBoxAttrs)        .css(opts.closeBtnBoxCSS)       .appendTo(this.closeBtnWrapper);
+        this.closeBtn           = $('<div>').attr(opts.closeBtnAttrs)           .css(opts.closeBtnCSS)          .appendTo(this.closeBtnBox)         .html(opts.closeBtnHtml);
+        this.img                = $('<img>').attr(opts.imgAttrs)                .css(opts.imgCSS)               .appendTo(this.layout);
+        this.imgNext            = $('<img>').attr(opts.imgNextAttrs)            .css(opts.imgNextCSS)           .appendTo(this.layout);
+        this.imgPrev            = $('<img>').attr(opts.imgPrevAttrs)            .css(opts.imgPrevCSS)           .appendTo(this.layout);
+        this.bottom             = $('<div>').attr(opts.bottomAttrs)             .css(opts.bottomCSS)            .appendTo(this.layout);
 
         var t = this,
             d = 0,
@@ -94,20 +94,16 @@
 
             i = openI;
 
-            t.img.attr('src', $(t[i]).attr('href'));
+            t.img.stop().fadeOut(opts.fadeOut).attr('src', $(t[i]).attr('href'));
             t.imgNext.attr('src', $(t[nextI()]).attr('href'));
             t.imgPrev.attr('src', $(t[prevI()]).attr('href'));
 
             t.overlay.fadeIn(opts.fadeIn);
             t.layout.fadeIn(opts.fadeIn);
-            t.layout.css({
-                top: $(document).scrollTop() + 'px',
-                height: $(window).height() + 'px'
-            });
-
-            $(document).unbind('keydown', key).bind('keydown', key);
 
             opts.onopen.call(t, t[i]);
+
+            $(document).unbind('keydown', key).bind('keydown', key);
 
             return false;
         }
@@ -116,24 +112,34 @@
             return next();
         });
 
-        this.prevBtn.click(function() {
+        this.img.load(function() {
+            t.img.stop().fadeIn(opts.fadeIn);
+        });
+
+        this.prevBtnWrapper.click(function() {
             return prev();
         });
 
-        this.closeBtn.click(function() {
+        this.closeBtnWrapper.click(function() {
             return close();
         });
 
-        this.closeBtn.hover(function() {
-            $(this).css(opts.closeBtnHoverCSS);
-        }, function () {
-            $(this).css(opts.closeBtnCSS);
+        this.prevBtnWrapper.hover(function() {
+            t.prevBtn.stop().animate(opts.prevBtnHoverCSS, opts.fadeIn);
+        }, function() {
+            t.prevBtn.stop().animate(opts.prevBtnCSS, opts.fadeOut);
         });
 
-        this.prevBtn.hover(function() {
-            $(this).css(opts.prevBtnHoverCSS);
-        }, function() {
-            $(this).css(opts.prevBtnCSS);
+        this.closeBtnWrapper.hover(function() {
+            t.closeBtn.stop().animate(opts.closeBtnHoverCSS, opts.fadeIn);
+        }, function () {
+            t.closeBtn.stop().animate(opts.closeBtnCSS, opts.fadeOut);
+        });
+
+        this.bottom.hover(function() {
+            t.bottom.stop().animate(opts.bottomHoverCSS, opts.fadeIn);
+        }, function () {
+            t.bottom.stop().animate(opts.bottomCSS, opts.fadeOut);
         });
 
         return this.each(function(i) {
@@ -143,53 +149,64 @@
         });
     };
 
-    var btnCSS = {color: '#808080', display: 'table-cell', verticalAlign: 'middle', textAlign: 'center', fontSize: '2em', fontWeight: 'bold', cursor: 'pointer', padding: '.75em'},
-        btnHoverCSS = {color: '#c0c0c0'},
-        imgPreCSS = {position: 'absolute', top: '-10000px', width: '100px'},
-        textCSS = {color: '#c0c0c0'};
-
-
     $.fn.abigimage.defaults = {
-        fadeIn:             'normal',
-        fadeOut:            'fast',
+        fadeIn:                 'normal',
+        fadeOut:                'fast',
 
-        prevBtnHtml:        '◄',
-        closeBtnHtml:       '✖',
+        prevBtnHtml:            '&larr;',
+        closeBtnHtml:           'x',
 
-        keyNext:            [13 /* enter */, 32 /* space */, 39 /* right */, 40 /* down */],
-        keyPrev:            [8 /* backspace */, 37 /* left */, 38 /* up */],
-        keyClose:           [27 /* escape */, 35 /* end */, 36 /* home */],
+        keyNext:                [13 /* enter */, 32 /* space */, 39 /* right */, 40 /* down */],
+        keyPrev:                [8 /* backspace */, 37 /* left */, 38 /* up */],
+        keyClose:               [27 /* escape */, 35 /* end */, 36 /* home */],
 
-        onopen:             function() {},
+        onopen:                 function() {},
 
-        overlayCSS:         {backgroundColor: '#404040', opacity: 0.925, zIndex: 2, position: 'fixed', left: 0, top: 0, width: '100%', height: '100%', display: 'none'},
-        layoutCSS:          {zIndex: 2, position: 'absolute', top: 0, left: 0, width: '100%', margin: '0 auto', display: 'none',
-                                '-webkit-user-select': 'none', '-moz-user-select': 'none', 'user-select': 'none'},
-        wrapperCSS:         {display: 'table', width: '100%', height: '100%'},
-        boxCSS:             {display: 'table-row'},
-        bodyCSS:            {display: 'table-cell', verticalAlign: 'middle', textAlign: 'center', width: '1%'},
-        prevBtnCSS:         btnCSS,
-        prevBtnHoverCSS:    btnHoverCSS,
-        closeBtnCSS:        btnCSS,
-        closeBtnHoverCSS:   btnHoverCSS,
-        imgCSS:             {maxWidth: '800px', cursor: 'pointer', display: 'block', margin: '1ex 0'},
-        imgNextCSS:         imgPreCSS,
-        imgPrevCSS:         imgPreCSS,
-        topCSS:             textCSS,
-        bottomCSS:          textCSS,
+        overlayCSS:             {position: 'fixed', zIndex: 101, top: 0, right: 0, bottom: 0, left: 0, display: 'none',
+                                    backgroundColor: '#000', opacity: 0.9},
+        layoutCSS:              {position: 'fixed', zIndex: 101, top: 0, right: 0, bottom: 0, left: 0, display: 'none',
+                                    '-webkit-user-select': 'none', '-moz-user-select': 'none', 'user-select': 'none',
+                                    '-webkit-tap-highlight-color': 'rgba(0, 0, 0, 0)',
+                                    lineHeight: 2.5},
 
-        overlayAttrs:       {},
-        layoutAttrs:        {},
-        wrapperAttrs:       {},
-        boxAttrs:           {},
-        bodyAttrs:          {},
-        prevBtnAttrs:       {},
-        closeBtnAttrs:      {},
-        imgAttrs:           {},
-        imgNextAttrs:       {},
-        imgPrevAttrs:       {},
-        topAttrs:           {},
-        bottomAttrs:        {}
+        prevBtnWrapperCSS:      {cursor: 'pointer', position: 'absolute', top: 0, right: '50%', bottom: 0, left: 0},
+        closeBtnWrapperCSS:     {cursor: 'pointer', position: 'absolute', top: 0, right: 0,     bottom: 0, left: '50%'},
+
+        prevBtnBoxCSS:          {position: 'absolute', zIndex: 104, top: 0, bottom: 0, left: 0},
+        closeBtnBoxCSS:         {position: 'absolute', zIndex: 104, top: 0, bottom: 0, right: 0},
+
+        prevBtnCSS:             {color: '#fff', backgroundColor: '#000', opacity: 0.5,
+                                    padding: '0 1em', borderRadius: '0 0 1ex 0'},
+        closeBtnCSS:            {color: '#fff', backgroundColor: '#000', opacity: 0.5,
+                                    padding: '0 1em', borderRadius: '0 0 0 1ex'},
+
+        prevBtnHoverCSS:        {opacity: 1},
+        closeBtnHoverCSS:       {opacity: 1},
+
+        imgCSS:                 {position: 'absolute', zIndex: 102, margin: 'auto', top: 0, right: 0, bottom: 0, left: 0,
+                                    display: 'block', cursor: 'pointer', maxWidth: '100%', maxHeight: '100%'},
+
+        imgNextCSS:             {position: 'absolute', top: '-10000px', width: '100px'},
+        imgPrevCSS:             {position: 'absolute', top: '-10000px', width: '100px'},
+
+        bottomCSS:              {position: 'absolute', zIndex: 103, right: 0, bottom: 0, left: 0,
+                                    '-webkit-user-select': 'text', '-moz-user-select': 'text', 'user-select': 'text',
+                                    backgroundColor: '#000', color: '#fff', opacity: 0.5,
+                                    padding: '0 1em', textAlign: 'center'},
+        bottomHoverCSS:         {opacity: 1},
+
+        overlayAttrs:           {},
+        layoutAttrs:            {},
+        prevBtnWrapperAttrs:    {},
+        prevBtnBoxAttrs:        {},
+        prevBtnAttrs:           {},
+        closeBtnWrapperAttrs:   {},
+        closeBtnBoxAttrs:       {},
+        closeBtnAttrs:          {},
+        imgAttrs:               {},
+        imgNextAttrs:           {},
+        imgPrevAttrs:           {},
+        bottomAttrs:            {}
     };
 
 }(jQuery));

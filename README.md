@@ -4,6 +4,7 @@
 
 ## Features
 
+- Fit mobile devices.
 - Uses link's `href` attribute for large images.
 - Clicking image opens next one, clicking left side opens previous, clicking right side closes image.
 - Hotkeys for next, previous and close buttons.
@@ -19,20 +20,16 @@
 
 Add jQuery and ABigImage scripts in head of page.
 
-```html
-<script src="jquery.js"></script>
-<script src="abigimage.jquery.js"></script>
-```
+    <script src="jquery.js"></script>
+    <script src="abigimage.jquery.js"></script>
 
 Call plugin on selector of enlargeable images links.
 
-```html
-<script>
-    $(function() {
-        $('a[href$=".jpg"]').abigimage();
-    });
-</script>
-```
+    <script>
+        $(function() {
+            $('a[href$=".jpg"]').abigimage();
+        });
+    </script>
 
 ### Options
 
@@ -49,62 +46,59 @@ Call plugin on selector of enlargeable images links.
 
 Plugin generates next html code:
 
-```html
-<!-- overlay -->
-<div></div>
-<!-- layout -->
-<div>
-    <!-- wrapper -->
+    <!-- overlay -->
+    <div></div>
+    <!-- layout -->
     <div>
-        <!-- box -->
+        <!-- prevBtnWrapper (clickable behind the image, width 50%) -->
         <div>
-            <!-- prevBtn -->
-            <div><!-- prevBtnHtml --></div>
-            <!-- body -->
+            <!-- prevBtnBox (clickable above the image, button width) -->
             <div>
-                <!-- top -->
-                <div></div>
-                <!-- img -->
-                <img>
-                <!-- imgNext -->
-                <img>
-                <!-- imgPrev -->
-                <img>
-                <!-- bottom -->
-                <div></div>
+                <!-- prevBtn -->
+                <div><!-- prevBtnHtml --></div>
             </div>
-            <!-- closeBtn -->
-            <div><!-- closeBtnHtml --></div>
         </div>
+        <!-- closeBtnWrapper (clickable behind the image, width 50%) -->
+        <div>
+            <!-- closeBtnBox (clickable above the image, button width) -->
+            <div>
+                <!-- closeBtn -->
+                <div><!-- closeBtnHtml --></div>
+            </div>
+        </div>
+        <!-- img -->
+        <img>
+        <!-- imgNext -->
+        <img>
+        <!-- imgPrev -->
+        <img>
+        <!-- bottom -->
+        <div></div>
     </div>
-</div>
-```
 
 ### Using onopen handler
 
 Function, defined as `onopen` handler, executes in context of plugin, and receives target element as argument. Plugin elements available in this context as properties.
 
-```html
-<script>
-    $(function() {
-        $('a[href$=".jpg"]').abigimage({
-            bottomCSS: {
-                fontSize: '2em',
-                textAlign: 'center'
-            },
-            onopen: function (target) {
-                this.bottom.html(
-                    $('img', target).attr('alt')
-                );
-            }
+    <script>
+        $(function() {
+            $('a[href$=".jpg"]').abigimage({
+                bottomCSS: {
+                    fontSize: '2em',
+                    textAlign: 'center'
+                },
+                onopen: function (target) {
+                    this.bottom.html(
+                        $('img', target).attr('alt')
+                    );
+                }
+            });
         });
-    });
-</script>
-```
+    </script>
 
 ## License
 
-Copyright © 2014 Krylosov Maksim <Aequiternus@gmail.com>
+Copyright © 2014 Maksim Krylosov <Aequiternus@gmail.com>
 
 This Source Code Form is subject to the terms of the Mozilla Public
 License, v. 2.0. If a copy of the MPL was not distributed with this
