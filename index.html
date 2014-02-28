@@ -5,8 +5,6 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link id="stylesheet" rel="stylesheet" href="http://aeqdev.com/tools/css/default/adefault-light.min.css">
-        <link id="stylesheet-prettify" rel="stylesheet" href="http://aeqdev.com/tools/js/easyprettyprint/google-code-prettify-light.css">
         <meta name="description" content="ABigImage is jQuery plugin for viewing big versions of images.">
         <style>
             body
@@ -45,21 +43,27 @@
             {
                 padding: .2em 0;
             }
+
+            @media (min-width: 700px) {
+                .features {
+                    float: left;
+                    width: 50%;
+                }
+
+                .ads {
+                    float: right;
+                }
+            }
+
+            .ads-title {
+                color: #000;
+                font-size: 1.3em;
+            }
+
+            .clearfix {
+                clear: both;
+            }
         </style>
-        <script src="http://aeqdev.com/tools/js/easyprettyprint/EasyPrettyPrint.js"></script>
-        <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-        <script src="abigimage.jquery.js"></script>
-        <script>
-            $(function() {
-                $('a[href$=".jpg"]').abigimage({
-                    onopen: function (target) {
-                        this.bottom.html(
-                            $('img', target).attr('alt')
-                        );
-                    }
-                });
-            });
-        </script>
     </head>
     <body>
 
@@ -84,23 +88,33 @@
 
 
 
-<h2>Features</h2>
+<div class="features">
+    <h2>Features</h2>
 
-<ul>
-    <li>Fit mobile devices.</li>
-    <li>Uses link's <code>href</code> attribute for large images.</li>
-    <li>Clicking image opens next one, clicking left side opens previous, clicking right side closes image.</li>
-    <li>Hotkeys for next, previous and close buttons.</li>
-    <li>Closing after viewing of all images.</li>
-    <li>Preloading of next and previous images.</li>
-    <li>Fully customizable styles.</li>
-    <li>Customizable bottom area.</li>
-    <li>Customizable <code>onopen</code> event.</li>
-</ul>
+    <ul>
+        <li>Fit mobile devices.</li>
+        <li>Uses link's <code>href</code> attribute for large images.</li>
+        <li>Clicking image opens next one, clicking left side opens previous, clicking right side closes image.</li>
+        <li>Hotkeys for next, previous and close buttons.</li>
+        <li>Closing after viewing of all images.</li>
+        <li>Preloading of next and previous images.</li>
+        <li>Fully customizable styles.</li>
+        <li>Customizable bottom area.</li>
+        <li>Customizable <code>onopen</code> event.</li>
+    </ul>
+</div>
+
+<div class="ads">
+    <div class="ads-title">Sponsored links</div>
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-7960201834628140"
+         data-ad-slot="1894666116"></ins>
+</div>
 
 
 
-<h2>Example</h2>
+<h2 class="clearfix">Example</h2>
 
 <p>
     <a href="img/1-big.jpg"><img src="img/1-small.jpg" alt="First image"></a>
@@ -120,11 +134,9 @@
 
 <p>Call plugin on selector of enlargeable images links.</p>
 
-<pre><code>&lt;script&gt;
-    $(function() {
-        $('a[href$=".jpg"]').abigimage();
-    });
-&lt;/script&gt;
+<pre><code>$(function() {
+    $('a[href$=".jpg"]').abigimage();
+});
 </code></pre>
 
 <h3>Options</h3>
@@ -140,6 +152,9 @@
 <li><code>onopen</code> - function called when image opens.</li>
 <li><code>*Attrs</code> - plugin elements attributes.</li>
 <li><code>*CSS</code> - plugin elements CSS.</li>
+<li><code>prevBtnHoverCSS</code> - "previous" button on hover CSS.</li>
+<li><code>closeBtnHoverCSS</code> - "close" button on hover CSS.</li>
+<li><code>bottomHoverCSS</code> - bottom area on hover CSS.</li>
 </ul>
 
 <p>Plugin generates next html code:</p>
@@ -179,20 +194,18 @@
 
 <p>Function, defined as <code>onopen</code> handler, executes in context of plugin, and receives target element as argument. Plugin elements available in this context as properties.</p>
 
-<pre><code>&lt;script&gt;
-    $(function() {
-        $('a[href$=".jpg"]').abigimage({
-            bottomCSS: {
-                fontSize: '2em'
-            },
-            onopen: function (target) {
-                this.bottom.html(
-                    $('img', target).attr('alt')
-                );
-            }
-        });
+<pre><code>$(function() {
+    $('a[href$=".jpg"]').abigimage({
+        bottomCSS: {
+            fontSize: '2em'
+        },
+        onopen: function (target) {
+            this.bottom.html(
+                $('img', target).attr('alt')
+            );
+        }
     });
-&lt;/script&gt;
+});
 </code></pre>
 
 
@@ -201,24 +214,41 @@
 
 
 
-<script>EasyPrettyPrint();</script>
-
-
-
         </div>
 
-<script type="text/javascript">
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-11259339-5']);
-  _gaq.push(['_trackPageview']);
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+<link rel="stylesheet" href="//aeqdev.com/tools/css/default/adefault-light.min.css">
+<link rel="stylesheet" href="//yandex.st/highlightjs/8.0/styles/googlecode.min.css">
 
+<script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+<script src="abigimage.jquery.js"></script>
+<script src="//yandex.st/highlightjs/8.0/highlight.min.js"></script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+<script>
+    $(function() {
+        $('a[href$=".jpg"]').abigimage({
+            onopen: function (target) {
+                this.bottom.html(
+                    $('img', target).attr('alt')
+                );
+            }
+        });
+    });
+
+    hljs.initHighlightingOnLoad();
+
+    (adsbygoogle = window.adsbygoogle || []).push({});
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-11259339-5', 'aeqdev.com');
+    ga('send', 'pageview');
 </script>
+
     </body>
 </html>

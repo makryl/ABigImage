@@ -25,11 +25,9 @@ Add jQuery and ABigImage scripts in head of page.
 
 Call plugin on selector of enlargeable images links.
 
-    <script>
-        $(function() {
-            $('a[href$=".jpg"]').abigimage();
-        });
-    </script>
+    $(function() {
+        $('a[href$=".jpg"]').abigimage();
+    });
 
 ### Options
 
@@ -43,6 +41,9 @@ Call plugin on selector of enlargeable images links.
 - `onopen` - function called when image opens.
 - `*Attrs` - plugin elements attributes.
 - `*CSS` - plugin elements CSS.
+- `prevBtnHoverCSS` - "previous" button on hover CSS.
+- `closeBtnHoverCSS` - "close" button on hover CSS.
+- `bottomHoverCSS` - bottom area on hover CSS.
 
 Plugin generates next html code:
 
@@ -80,21 +81,19 @@ Plugin generates next html code:
 
 Function, defined as `onopen` handler, executes in context of plugin, and receives target element as argument. Plugin elements available in this context as properties.
 
-    <script>
-        $(function() {
-            $('a[href$=".jpg"]').abigimage({
-                bottomCSS: {
-                    fontSize: '2em',
-                    textAlign: 'center'
-                },
-                onopen: function (target) {
-                    this.bottom.html(
-                        $('img', target).attr('alt')
-                    );
-                }
-            });
+    $(function() {
+        $('a[href$=".jpg"]').abigimage({
+            bottomCSS: {
+                fontSize: '2em',
+                textAlign: 'center'
+            },
+            onopen: function (target) {
+                this.bottom.html(
+                    $('img', target).attr('alt')
+                );
+            }
         });
-    </script>
+    });
 
 ## License
 

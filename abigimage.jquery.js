@@ -154,63 +154,63 @@
     };
 
     $.fn.abigimage.defaults = {
-        fadeIn:                 'normal',
-        fadeOut:                'fast',
+        fadeIn:               'fast',
+        fadeOut:              'fast',
 
-        prevBtnHtml:            '&larr;',
-        closeBtnHtml:           'x',
+        prevBtnHtml:          '&larr;',
+        closeBtnHtml:         'x',
 
-        keyNext:                [13 /* enter */, 32 /* space */, 39 /* right */, 40 /* down */],
-        keyPrev:                [8 /* backspace */, 37 /* left */, 38 /* up */],
-        keyClose:               [27 /* escape */, 35 /* end */, 36 /* home */],
+        keyNext:              [13 /* enter */, 32 /* space */, 39 /* right */, 40 /* down */],
+        keyPrev:              [8 /* backspace */, 37 /* left */, 38 /* up */],
+        keyClose:             [27 /* escape */, 35 /* end */, 36 /* home */],
 
-        onopen:                 function() {},
+        onopen:               function() {},
 
-        overlayCSS:             {position: 'fixed', zIndex: 101, top: 0, right: 0, bottom: 0, left: 0, display: 'none',
-                                    backgroundColor: '#000', opacity: 0.9},
-        layoutCSS:              {position: 'fixed', zIndex: 101, top: 0, right: 0, bottom: 0, left: 0, display: 'none',
-                                    '-webkit-user-select': 'none', '-moz-user-select': 'none', 'user-select': 'none',
-                                    '-webkit-tap-highlight-color': 'rgba(0, 0, 0, 0)',
-                                    lineHeight: 2.5},
+        overlayCSS:           {position: 'fixed', zIndex: 101, top: 0, right: 0, bottom: 0, left: 0, display: 'none',
+                                  backgroundColor: '#000', opacity: .9},
+        layoutCSS:            {position: 'fixed', zIndex: 101, top: 0, right: 0, bottom: 0, left: 0, display: 'none',
+                                  '-webkit-user-select': 'none', '-moz-user-select': 'none', 'user-select': 'none',
+                                  '-webkit-tap-highlight-color': 'rgba(0, 0, 0, 0)',
+                                  lineHeight: 2.5},
 
-        prevBtnWrapperCSS:      {cursor: 'pointer', position: 'absolute', top: 0, right: '50%', bottom: 0, left: 0},
-        closeBtnWrapperCSS:     {cursor: 'pointer', position: 'absolute', top: 0, right: 0,     bottom: 0, left: '50%'},
+        prevBtnWrapperCSS:    {cursor: 'pointer', position: 'absolute', top: 0, right: '50%', bottom: 0, left: 0},
+        closeBtnWrapperCSS:   {cursor: 'pointer', position: 'absolute', top: 0, right: 0,     bottom: 0, left: '50%'},
 
-        prevBtnBoxCSS:          {position: 'absolute', zIndex: 104, top: 0, bottom: 0, left: 0},
-        closeBtnBoxCSS:         {position: 'absolute', zIndex: 104, top: 0, bottom: 0, right: 0},
+        prevBtnBoxCSS:        {position: 'absolute', zIndex: 104, top: 0, bottom: 0, left: 0},
+        closeBtnBoxCSS:       {position: 'absolute', zIndex: 104, top: 0, bottom: 0, right: 0},
 
-        prevBtnCSS:             {color: '#fff', backgroundColor: '#000', opacity: 0.5,
-                                    padding: '0 1em', borderRadius: '0 0 1ex 0'},
-        closeBtnCSS:            {color: '#fff', backgroundColor: '#000', opacity: 0.5,
-                                    padding: '0 1em', borderRadius: '0 0 0 1ex'},
+        prevBtnCSS:           {color: '#fff', backgroundColor: '#000', opacity: .5,
+                                   padding: '0 1em', borderRadius: '0 0 1ex 0'},
+        closeBtnCSS:          {color: '#fff', backgroundColor: '#000', opacity: .5,
+                                   padding: '0 1em', borderRadius: '0 0 0 1ex'},
 
-        prevBtnHoverCSS:        {opacity: 1},
-        closeBtnHoverCSS:       {opacity: 1},
+        prevBtnHoverCSS:      {opacity: 1},
+        closeBtnHoverCSS:     {opacity: 1},
 
-        imgCSS:                 {position: 'absolute', zIndex: 102, margin: 'auto', top: 0, right: 0, bottom: 0, left: 0,
-                                    display: 'block', cursor: 'pointer', maxWidth: '100%', maxHeight: '100%'},
+        imgCSS:               {position: 'absolute', zIndex: 102, margin: 'auto', top: 0, right: 0, bottom: 0, left: 0,
+                                  display: 'block', cursor: 'pointer', maxWidth: '100%', maxHeight: '100%'},
 
-        imgNextCSS:             {position: 'absolute', top: '-10000px', width: '100px'},
-        imgPrevCSS:             {position: 'absolute', top: '-10000px', width: '100px'},
+        imgNextCSS:           {position: 'absolute', top: '-10000px', width: '100px'},
+        imgPrevCSS:           {position: 'absolute', top: '-10000px', width: '100px'},
 
-        bottomCSS:              {position: 'absolute', zIndex: 103, right: 0, bottom: 0, left: 0,
-                                    '-webkit-user-select': 'text', '-moz-user-select': 'text', 'user-select': 'text',
-                                    backgroundColor: '#000', color: '#fff', opacity: 0.5,
-                                    padding: '0 1em', textAlign: 'center'},
-        bottomHoverCSS:         {opacity: 1},
+        bottomCSS:            {position: 'absolute', zIndex: 103, right: 0, bottom: 0, left: 0,
+                                  '-webkit-user-select': 'text', '-moz-user-select': 'text', 'user-select': 'text',
+                                  backgroundColor: '#000', color: '#fff', opacity: .5,
+                                  padding: '0 1em', textAlign: 'center'},
+        bottomHoverCSS:       {opacity: 1},
 
-        overlayAttrs:           {},
-        layoutAttrs:            {},
-        prevBtnWrapperAttrs:    {},
-        prevBtnBoxAttrs:        {},
-        prevBtnAttrs:           {},
-        closeBtnWrapperAttrs:   {},
-        closeBtnBoxAttrs:       {},
-        closeBtnAttrs:          {},
-        imgAttrs:               {},
-        imgNextAttrs:           {},
-        imgPrevAttrs:           {},
-        bottomAttrs:            {}
+        overlayAttrs:         {},
+        layoutAttrs:          {},
+        prevBtnWrapperAttrs:  {},
+        prevBtnBoxAttrs:      {},
+        prevBtnAttrs:         {},
+        closeBtnWrapperAttrs: {},
+        closeBtnBoxAttrs:     {},
+        closeBtnAttrs:        {},
+        imgAttrs:             {},
+        imgNextAttrs:         {},
+        imgPrevAttrs:         {},
+        bottomAttrs:          {}
     };
 
 }(jQuery));
