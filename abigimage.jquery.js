@@ -1,6 +1,6 @@
 /**
  * http://aeqdev.com/tools/js/abigimage/
- * v 1.2.3
+ * v 1.2.4
  *
  * Copyright © 2014 Maksim Krylosov <Aequiternus@gmail.com>
  *
@@ -94,7 +94,7 @@
 
             i = openI;
 
-            t.img.stop().fadeOut(opts.fadeOut)
+            t.img
                 .removeAttr('src') // To re-fire load event if same image opened
                 .attr('src', $(t[i]).attr('href'));
 
@@ -109,8 +109,6 @@
         }
 
         this.img.load(function() {
-            t.img.stop().fadeIn(opts.fadeIn);
-
             // preload prev and next images after viewed images loaded
             t.imgNext.attr('src', $(t[nextI()]).attr('href'));
             t.imgPrev.attr('src', $(t[prevI()]).attr('href'));
@@ -180,18 +178,19 @@
         closeBtnBoxCSS:       {position: 'absolute', zIndex: 104, top: 0, bottom: 0, right: 0},
 
         prevBtnCSS:           {color: '#fff', backgroundColor: '#000', opacity: .5,
-                                   padding: '0 1em', borderRadius: '0 0 1ex 0'},
+                                  padding: '0 1em', borderRadius: '0 0 1ex 0'},
         closeBtnCSS:          {color: '#fff', backgroundColor: '#000', opacity: .5,
-                                   padding: '0 1em', borderRadius: '0 0 0 1ex'},
+                                  padding: '0 1em', borderRadius: '0 0 0 1ex'},
 
         prevBtnHoverCSS:      {opacity: 1},
         closeBtnHoverCSS:     {opacity: 1},
 
-        imgCSS:               {position: 'absolute', zIndex: 102, margin: 'auto', top: 0, right: 0, bottom: 0, left: 0,
+        imgCSS:               {position: 'absolute', zIndex: 102, margin: 'auto', width: 'auto',
+                                  top: 0, right: 0, bottom: 0, left: 0,
                                   display: 'block', cursor: 'pointer', maxWidth: '100%', maxHeight: '100%'},
 
-        imgNextCSS:           {position: 'absolute', top: '-10000px', width: '100px'},
-        imgPrevCSS:           {position: 'absolute', top: '-10000px', width: '100px'},
+        imgNextCSS:           {position: 'absolute', top: '-10000px', left: 0, width: '1px'},
+        imgPrevCSS:           {position: 'absolute', top: '-10000px', left: 0, width: '1px'},
 
         bottomCSS:            {position: 'absolute', zIndex: 103, right: 0, bottom: 0, left: 0,
                                   '-webkit-user-select': 'text', '-moz-user-select': 'text', 'user-select': 'text',
