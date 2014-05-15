@@ -5,11 +5,13 @@
 ## Features
 
 - Fit mobile devices.
-- Uses link's `href` attribute for large images.
+- Uses CSS3 transform and transition for smooth touch sliding.
+- Touch slide left or right opens next or previous image, touch slide up or down closes image.
 - Clicking image opens next one, clicking left side opens previous, clicking right side closes image.
 - Hotkeys for next, previous and close buttons.
 - Closing after viewing of all images.
 - Preloading of next and previous images.
+- Uses link's `href` or `data-href` attribute for large images.
 - Fully customizable styles.
 - Customizable bottom area.
 - Customizable `onopen` event.
@@ -26,18 +28,29 @@ Add jQuery and ABigImage scripts in head of page.
 Call plugin on selector of enlargeable images links.
 
     $(function() {
+        /* all links with class "myimgclass" */
+        $('.myimgclass').abigimage();
+
+        /* or all links to "*.jpg" images */
         $('a[href$=".jpg"]').abigimage();
+
+        /* or all links to images under dir "/my/images/dir/" */
+        $('a[href^="/my/images/dir/"]').abigimage();
     });
 
 ### Options
 
-- `fadeIn` - fade in duration or [options](http://api.jquery.com/fadein/).
-- `fadeOut` - fade out duration or [options](http://api.jquery.com/fadeout/).
-- `prevBtnHtml` - html of "previous" button.
-- `closeBtnHtml` - html of "close" button.
-- `keyNext` - hotkeys for "next" button (by default: 13 enter, 32 space, 39 right, 40 down).
-- `keyPrev` - hotkeys for "previous" button (by default: 8 backspace, 37 left, 38 up).
-- `keyNext` - hotkeys for "close" button (by default: 27 escape, 35 end, 36 home).
+- `fadeIn` - fade in duration or [options](http://api.jquery.com/fadein/) (default: `fast`).
+- `fadeOut` - fade out duration or [options](http://api.jquery.com/fadeout/) (default: `fast`).
+- `slideWidth` - slide width to switch or close image (between 0 and 1, default: 0.4).
+- `slideVelocity` - slide velocity to switch or close image (pixels per millisecond, default: 0.4).
+- `zoomMin` - minimal zoom that will hold (default: 1.5).
+- `zoomMax` - maximal zoom (default: 5).
+- `prevBtnHtml` - html of "previous" button (default: `&larr;`).
+- `closeBtnHtml` - html of "close" button (default: `x`).
+- `keyNext` - hotkeys for "next" button (default: 13 enter, 32 space, 39 right, 40 down).
+- `keyPrev` - hotkeys for "previous" button (default: 8 backspace, 37 left, 38 up).
+- `keyNext` - hotkeys for "close" button (default: 27 escape, 35 end, 36 home).
 - `onopen` - function called when image opens.
 - `*Attrs` - plugin elements attributes.
 - `*CSS` - plugin elements CSS.
@@ -51,28 +64,31 @@ Plugin generates next html code:
     <div></div>
     <!-- layout -->
     <div>
-        <!-- prevBtnWrapper (clickable behind the image, width 50%) -->
+        <!-- box -->
         <div>
-            <!-- prevBtnBox (clickable above the image, button width) -->
+            <!-- prevBtnWrapper (clickable behind the image, width 50%) -->
             <div>
-                <!-- prevBtn -->
-                <div><!-- prevBtnHtml --></div>
+                <!-- prevBtnBox (clickable above the image, button width) -->
+                <div>
+                    <!-- prevBtn -->
+                    <div><!-- prevBtnHtml --></div>
+                </div>
             </div>
-        </div>
-        <!-- closeBtnWrapper (clickable behind the image, width 50%) -->
-        <div>
-            <!-- closeBtnBox (clickable above the image, button width) -->
+            <!-- closeBtnWrapper (clickable behind the image, width 50%) -->
             <div>
-                <!-- closeBtn -->
-                <div><!-- closeBtnHtml --></div>
+                <!-- closeBtnBox (clickable above the image, button width) -->
+                <div>
+                    <!-- closeBtn -->
+                    <div><!-- closeBtnHtml --></div>
+                </div>
             </div>
+            <!-- img -->
+            <img>
+            <!-- imgNext -->
+            <img>
+            <!-- imgPrev -->
+            <img>
         </div>
-        <!-- img -->
-        <img>
-        <!-- imgNext -->
-        <img>
-        <!-- imgPrev -->
-        <img>
         <!-- bottom -->
         <div></div>
     </div>
@@ -94,6 +110,14 @@ Function, defined as `onopen` handler, executes in context of plugin, and receiv
             }
         });
     });
+
+### Using custom links with data-href attribute
+
+If you want different link for plugin's big image and for non-javascript clients (search engines or browsers without javascript) - use `data-href` attribute:
+
+    <a href="/non_javascript_link.html" data-href="/images/big/myimage.jpg"> ... </a>
+
+Also, you can use `data-href` attribute on any element, not only links.
 
 ## License
 

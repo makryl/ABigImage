@@ -45,19 +45,15 @@
             }
 
             @media (min-width: 700px) {
-                .features {
+                .coll {
                     float: left;
                     width: 50%;
                 }
 
-                .ads {
+                .colr {
                     float: right;
+                    width: 300px;
                 }
-            }
-
-            .ads-title {
-                color: #000;
-                font-size: 1.3em;
             }
 
             .clearfix {
@@ -78,34 +74,48 @@
 
 <p>ABigImage is jQuery plugin for viewing big versions of images.</p>
 
-
-
-<ul>
-    <li><a href="abigimage.jquery.js">abigimage.jquery.js</a> (8.5Kb)</li>
-    <li><a href="abigimage.jquery.min.js">abigimage.jquery.min.js</a> (4.6Kb)</li>
-    <li>Project on <a href="https://github.com/Aequiternus/ABigImage">GitHub</a></li>
-</ul>
+<p>Current version: <b>1.2.5</b> (2014-05-15).</p>
 
 
 
-<div class="features">
-    <h2>Features</h2>
+<div class="coll">
+    <ul>
+        <li><a href="abigimage.jquery.js">abigimage.jquery.js</a> (16.4Kb)</li>
+        <li><a href="abigimage.jquery.min.js">abigimage.jquery.min.js</a> (7.5Kb)</li>
+        <li>Project on <a href="https://github.com/Aequiternus/ABigImage">GitHub</a></li>
+    </ul>
+</div>
 
+<div class="colr">
+    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+        <input type="hidden" name="cmd" value="_s-xclick">
+        <input type="hidden" name="hosted_button_id" value="NUZ7CTKFYDX8C">
+        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" name="submit" alt="Donate PayPal">
+        <img alt="" border="0" src="https://www.paypalobjects.com/ru_RU/i/scr/pixel.gif" width="1" height="1">
+    </form>
+</div>
+
+
+
+<h2>Features</h2>
+
+<div class="coll">
     <ul>
         <li>Fit mobile devices.</li>
-        <li>Uses link's <code>href</code> attribute for large images.</li>
+        <li>Uses CSS3 transform and transition for smooth touch sliding.</li>
+        <li>Touch slide left or right opens next or previous image, touch slide up or down closes image.</li>
         <li>Clicking image opens next one, clicking left side opens previous, clicking right side closes image.</li>
         <li>Hotkeys for next, previous and close buttons.</li>
         <li>Closing after viewing of all images.</li>
         <li>Preloading of next and previous images.</li>
+        <li>Uses link's <code>href</code> or <code>data-href</code> attribute for large images.</li>
         <li>Fully customizable styles.</li>
         <li>Customizable bottom area.</li>
         <li>Customizable <code>onopen</code> event.</li>
     </ul>
 </div>
 
-<div class="ads">
-    <div class="ads-title">Sponsored links</div>
+<div class="colr">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-7960201834628140"
@@ -121,6 +131,9 @@
     <a href="img/2-big.jpg"><img src="img/2-small.jpg" alt="Second image"></a>
     <a href="img/3-big.jpg"><img src="img/3-small.jpg" alt="Third image"></a>
     <a href="img/4-big.jpg"><img src="img/4-small.jpg" alt="Fourth image"></a>
+</p>
+
+<p>Live example, where I'm using and testing this plugin at the moment: <a href="http://kawaiinyan.com/" target="_blank">kawaiinyan.com</a>.</p>
 
 <h2>Usage</h2>
 
@@ -135,17 +148,28 @@
 <p>Call plugin on selector of enlargeable images links.</p>
 
 <pre><code>$(function() {
+    /* all links with class "myimgclass" */
+    $('.myimgclass').abigimage();
+
+    /* or all links to "*.jpg" images */
     $('a[href$=".jpg"]').abigimage();
+
+    /* or all links to images under dir "/my/images/dir/" */
+    $('a[href^="/my/images/dir/"]').abigimage();
 });
 </code></pre>
 
 <h3>Options</h3>
 
 <ul>
-<li><code>fadeIn</code> - fade in duration or <a href="http://api.jquery.com/fadein/">options</a>.</li>
-<li><code>fadeOut</code> - fade out duration or <a href="http://api.jquery.com/fadeout/">options</a>.</li>
-<li><code>prevBtnHtml</code> - html of "previous" button.</li>
-<li><code>closeBtnHtml</code> - html of "close" button.</li>
+<li><code>fadeIn</code> - fade in duration or <a href="http://api.jquery.com/fadein/">options</a> (default: <code>fast</code>).</li>
+<li><code>fadeOut</code> - fade out duration or <a href="http://api.jquery.com/fadeout/">options</a> (default: <code>fast</code>).</li>
+<li><code>slideWidth</code> - slide width to switch or close image (between 0 and 1, default: 0.4).</li>
+<li><code>slideVelocity</code> - slide velocity to switch or close image (pixels per millisecond, default: 0.4).</li>
+<li><code>zoomMin</code> - minimal zoom that will hold (default: 1.5).</li>
+<li><code>zoomMax</code> - maximal zoom (default: 5).</li>
+<li><code>prevBtnHtml</code> - html of "previous" button (default: <code>&larr;</code>).</li>
+<li><code>closeBtnHtml</code> - html of "close" button (default: <code>x</code>).</li>
 <li><code>keyNext</code> - hotkeys for "next" button (by default: 13 enter, 32 space, 39 right, 40 down).</li>
 <li><code>keyPrev</code> - hotkeys for "previous" button (by default: 8 backspace, 37 left, 38 up).</li>
 <li><code>keyClose</code> - hotkeys for "close" button (by default: 27 escape, 35 end, 36 home).</li>
@@ -163,28 +187,31 @@
 &lt;div&gt;&lt;/div&gt;
 &lt;!-- layout --&gt;
 &lt;div&gt;
-    &lt;!-- prevBtnWrapper (clickable behind the image, width 50%) --&gt;
+    &lt;!-- box --&gt;
     &lt;div&gt;
-        &lt;!-- prevBtnBox (clickable above the image, button width) --&gt;
+        &lt;!-- prevBtnWrapper (clickable behind the image, width 50%) --&gt;
         &lt;div&gt;
-            &lt;!-- prevBtn --&gt;
-            &lt;div&gt;&lt;!-- prevBtnHtml --&gt;&lt;/div&gt;
+            &lt;!-- prevBtnBox (clickable above the image, button width) --&gt;
+            &lt;div&gt;
+                &lt;!-- prevBtn --&gt;
+                &lt;div&gt;&lt;!-- prevBtnHtml --&gt;&lt;/div&gt;
+            &lt;/div&gt;
         &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;!-- closeBtnWrapper (clickable behind the image, width 50%) --&gt;
-    &lt;div&gt;
-        &lt;!-- closeBtnBox (clickable above the image, button width) --&gt;
+        &lt;!-- closeBtnWrapper (clickable behind the image, width 50%) --&gt;
         &lt;div&gt;
-            &lt;!-- closeBtn --&gt;
-            &lt;div&gt;&lt;!-- closeBtnHtml --&gt;&lt;/div&gt;
+            &lt;!-- closeBtnBox (clickable above the image, button width) --&gt;
+            &lt;div&gt;
+                &lt;!-- closeBtn --&gt;
+                &lt;div&gt;&lt;!-- closeBtnHtml --&gt;&lt;/div&gt;
+            &lt;/div&gt;
         &lt;/div&gt;
+        &lt;!-- img --&gt;
+        &lt;img&gt;
+        &lt;!-- imgNext --&gt;
+        &lt;img&gt;
+        &lt;!-- imgPrev --&gt;
+        &lt;img&gt;
     &lt;/div&gt;
-    &lt;!-- img --&gt;
-    &lt;img&gt;
-    &lt;!-- imgNext --&gt;
-    &lt;img&gt;
-    &lt;!-- imgPrev --&gt;
-    &lt;img&gt;
     &lt;!-- bottom --&gt;
     &lt;div&gt;&lt;/div&gt;
 &lt;/div&gt;
@@ -208,7 +235,17 @@
 });
 </code></pre>
 
+<h3>Using data-href attribute</h3>
 
+<p>If you want different link for plugin's big image and for non-javascript clients (search engines or browsers without javascript) - use <code>data-href</code> attribute:</p>
+
+<pre><code>&lt;a href="/non_javascript_link.html" data-href="/images/big/myimage.jpg"&gt; ... &lt;/a&gt;</code></pre>
+
+<p>Also, you can use <code>data-href</code> attribute on any element, not only links.</p>
+
+
+
+<h3>P. S.</h3>
 
 <p>I WANT your comments, feature requests, bug reports, suggestions, thoughts... on <a href="https://github.com/Aequiternus/ABigImage">GitHub</a>.</p>
 
@@ -221,7 +258,7 @@
 <link rel="stylesheet" href="//aeqdev.com/tools/css/default/adefault-light.min.css">
 <link rel="stylesheet" href="//yandex.st/highlightjs/8.0/styles/googlecode.min.css">
 
-<script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+<script src="//code.jquery.com/jquery.min.js"></script>
 <script src="abigimage.jquery.js"></script>
 <script src="//yandex.st/highlightjs/8.0/highlight.min.js"></script>
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
