@@ -119,6 +119,27 @@ If you want different link for plugin's big image and for non-javascript clients
 
 Also, you can use `data-href` attribute on any element, not only links.
 
+### Static methods
+
+    /* open image by URL */
+    $.abigimage.open('/some_image.jpg');
+
+    /* open image by index in current list */
+    $.abigimage.open(5);
+
+    /* open image by URL at specified position in current list */
+    $.abigimage.open('/some_image.jpg', 5);
+
+    /* open next image */
+    $.abigimage.next();
+
+    /* open previous image */
+    $.abigimage.prev();
+
+    /* close image */
+    $.abigimage.close();
+
+
 ## License
 
 Copyright © 2014 Maksim Krylosov <Aequiternus@gmail.com>

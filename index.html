@@ -243,6 +243,27 @@
 
 <p>Also, you can use <code>data-href</code> attribute on any element, not only links.</p>
 
+<h3>Static methods</h3>
+
+<pre><code>/* open image by URL */
+$.abigimage.open('/some_image.jpg');
+
+/* open image by index in current list */
+$.abigimage.open(5);
+
+/* open image by URL at specified position in current list */
+$.abigimage.open('/some_image.jpg', 5);
+
+/* open next image */
+$.abigimage.next();
+
+/* open previous image */
+$.abigimage.prev();
+
+/* close image */
+$.abigimage.close();
+</code></pre>
+
 
 
 <h3>P. S.</h3>
