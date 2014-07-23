@@ -1,6 +1,6 @@
 /**
  * http://aeqdev.com/tools/js/abigimage/
- * v 1.2.4
+ * v 1.2.6
  *
  * Copyright © 2014 Maksim Krylosov <Aequiternus@gmail.com>
  *
@@ -67,14 +67,14 @@
 
     function key(event) {
         if (opts.keyNext.indexOf(event.which) !== -1) {
-            event.preventDefault();
             next();
+            return false;
         } else if (opts.keyPrev.indexOf(event.which) !== -1) {
-            event.preventDefault();
             prev();
+            return false;
         } else if (opts.keyClose.indexOf(event.which) !== -1) {
-            event.preventDefault();
             close();
+            return false;
         }
     }
 
@@ -113,7 +113,7 @@
         $(document).unbind('keydown', key).bind('keydown', key);
 
         return false;
-    };
+    }
 
     function close() {
         if (!opened) {
@@ -123,7 +123,7 @@
         i = null;
         d = 0;
         overlay.fadeOut(opts.fadeOut);
-        layout.fadeOut(opts.fadeOut);
+        layout.fadeOut(opts.fadeOut, transitionEnd);
 
         opts.onclose.call(t);
 
@@ -168,9 +168,9 @@
         vert,
         touches,
 
-        slideAnimateNext,
-        slideEnd,
-        slideActive;
+        slideTransition = false,
+        slideQueueFn = [null, null, null],
+        bs = box[0].style;
 
     touchReset();
 
@@ -236,7 +236,10 @@
             y = Math.max(-my, Math.min(my, y));
         } else {
             if (null === vert) {
-                vert = Math.abs(dy) > Math.abs(dx);
+                var dv = Math.abs(dy) - Math.abs(dx);
+                if (Math.abs(dv) > 2) {
+                    vert = dv > 0;
+                }
             }
             if (vert) {
                 x = 0;
@@ -244,28 +247,30 @@
                 y = 0;
             }
         }
-        slideAnimate(x, y, s);
+        slideQueueAnimate(x, y, s, false);
         e.preventDefault();
     });
 
-    img[0].addEventListener('touchend', function(e) {
+    img[0].addEventListener('touchend', touchend);
+    img[0].addEventListener('touchcancel', touchend);
+
+    function touchend(e) {
         var time = (new Date()).getTime() - start;
 
         if (!e.touches.length) {
             if (s <= opts.zoomMin) {
-                if (time < 20 && dx <= 1 && dy <= 1) {
-                    slideAnimate(0, 0, 1, false);
-                    next();
+                if (dx >= -1 && dx <= 1 && dy >= -1 && dy <= 1) {
+                    slideNext(true);
                 } else {
                     if (vert) {
                         var ady = Math.abs(dy);
                         if (ady > minD) {
-                            slideQueue(slideClose);
+                            slideClose();
                         } else {
                             if (ady / time > opts.slideVelocity) {
-                                slideQueue(slideClose);
+                                slideClose();
                             } else {
-                                slideQueue(slideBack);
+                                slideBack();
                             }
                         }
                     } else {
@@ -281,7 +286,7 @@
                                     slidePrev();
                                 }
                             } else {
-                                slideQueue(slideBack);
+                                slideBack();
                             }
                         }
                     }
@@ -290,7 +295,7 @@
             } else if (s > opts.zoomMax) {
                 s = opts.zoomMax;
 
-                slideAnimate(x, y, s, true);
+                slideQueueAnimate(x, y, s, true);
             }
         }
 
@@ -300,69 +305,70 @@
 
         touches = e.touches;
         e.preventDefault();
-    });
+    }
 
-    box.on('transitionend webkitTransitionEnd msTransitionEnd oTransitionEnd', function() {
-        slideActive = false;
-        if (slideEnd) {
-            slideEnd();
-            slideEnd = null;
-            slideAnimate(0, 0, 1, false);
-        } else if (slideAnimateNext) {
-            slideAnimateNext();
-            slideAnimateNext = null;
+    box.on('transitionend webkitTransitionEnd msTransitionEnd oTransitionEnd', transitionEnd);
+
+    function transitionEnd() {
+        slideTransition = false;
+        for (var i = 0; i < 2 ; i++) {
+            if (slideQueueFn[i]) {
+                slideQueueFn[i]();
+                slideQueueFn[i] = null;
+                if (slideTransition) break;
+            }
         }
-    });
+    }
 
     img.click(function() {
         return next();
     });
 
-    function slideNext() {
-        setTimeout(function() {slideEnd = next;}, 100);
-        slideAnimate(-width, 0, 1, true);
+    function slideNext(reset) {
+        slideQueueAnimate(reset ? 0 : -width, 0, 1, !reset);
+        slideQueueEnd(next);
     }
 
     function slidePrev() {
-        setTimeout(function() {slideEnd = prev;}, 100);
-        slideAnimate(width, 0, 1, true);
+        slideQueueAnimate(width, 0, 1, true);
+        slideQueueEnd(prev);
     }
 
     function slideBack() {
-        slideAnimate(0, 0, 1, true);
+        slideQueueAnimate(0, 0, 1, true);
     }
 
     function slideClose() {
         slideBack();
+        slideQueueEnd();
         close();
     }
 
-    function slideQueue(fn) {
-        if (slideActive) {
-            slideAnimateNext = fn;
+    function slideQueue(fn, i) {
+        if (slideTransition) {
+            slideQueueFn[i || 0] = fn;
         } else {
             fn();
         }
     }
 
+    function slideQueueAnimate(x, y, s, transition, i) {
+        slideQueue(function() {slideAnimate(x, y, s, transition)}, i);
+    }
+
+    function slideQueueEnd(fn) {
+        slideQueue(function() {slideAnimate(0, 0, 1, false); if (fn) fn();}, 1);
+    }
+
     function slideAnimate(x, y, s, transition) {
-        slideActive = true;
-        if (true === transition) {
-            transition = 'all .2s ease-out';
-        } else if (false === transition) {
-            transition = '';
-        } else {
-            transition = 'all .02s linear';
-        }
-        var transform = 'scale(' + s + ') translate(' + x + 'px, ' + y + 'px)';
-        box.css({
-            '-webkit-transform': transform,
-               '-moz-transform': transform,
-                '-ms-transform': transform,
-                 '-o-transform': transform,
-                    'transform': transform,
-                     transition: transition
-        });
+        slideTransition = transition;
+        var transform = 'scale(' + s + ') translate3d(' + x + 'px, ' + y + 'px, 0)';
+        bs.transition = transition ? 'all .2s ease-out' : '';
+        bs.webkitTransform = transform;
+        bs.mozTransform = transform;
+        bs.msTransform = transform;
+        bs.oTransform = transform;
+        bs.transform = transform;
     }
 
     $.fn.abigimage = function(options) {
