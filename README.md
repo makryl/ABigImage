@@ -11,6 +11,7 @@
 - Hotkeys for next, previous and close buttons.
 - Closing after viewing of all images.
 - Preloading of next and previous images.
+- Multi-touch zoom.
 - Uses link's `href` or `data-href` attribute for large images.
 - Fully customizable styles.
 - Customizable bottom area.

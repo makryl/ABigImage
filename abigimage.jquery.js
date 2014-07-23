@@ -1,6 +1,6 @@
 /**
  * http://aeqdev.com/tools/js/abigimage/
- * v 1.2.7
+ * v 1.2.8
  *
  * Copyright © 2014 Maksim Krylosov <Aequiternus@gmail.com>
  *
@@ -167,6 +167,7 @@
         minD,
         vert,
         touches,
+        multi,
 
         slideTransition = false,
         slideQueueFn = [null, null, null],
@@ -179,6 +180,7 @@
         y = 0;
         s = 1;
         vert = null;
+        multi = false;
         if (opts.imgCSS) {
             img.css({zIndex: opts.imgCSS.zIndex});
         }
@@ -202,6 +204,7 @@
     img[0].addEventListener('touchstart', function(e) {
         if (!opened) return;
         if (e.touches.length > 1) {
+            multi = true;
             k = dis(e);
             img.css({zIndex: opts.prevBtnBoxCSS.zIndex});
         } else {
@@ -262,8 +265,12 @@
 
         if (!e.touches.length) {
             if (s <= opts.zoomMin) {
-                if (dx >= -1 && dx <= 1 && dy >= -1 && dy <= 1) {
-                    slideNext(true);
+                if (time <= 1 || (dx >= -1 && dx <= 1 && dy >= -1 && dy <= 1)) {
+                    if (multi) {
+                        slideAnimate(0, 0, 1);
+                    } else {
+                        slideNext(true);
+                    }
                 } else {
                     if (vert) {
                         var ady = Math.abs(dy);
