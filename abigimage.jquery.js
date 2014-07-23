@@ -1,6 +1,6 @@
 /**
  * http://aeqdev.com/tools/js/abigimage/
- * v 1.2.6
+ * v 1.2.7
  *
  * Copyright © 2014 Maksim Krylosov <Aequiternus@gmail.com>
  *
@@ -200,6 +200,7 @@
     }
 
     img[0].addEventListener('touchstart', function(e) {
+        if (!opened) return;
         if (e.touches.length > 1) {
             k = dis(e);
             img.css({zIndex: opts.prevBtnBoxCSS.zIndex});
@@ -222,6 +223,7 @@
     });
 
     img[0].addEventListener('touchmove', function(e) {
+        if (!opened) return;
         dx = (med(e.touches, 'X') - med(touches, 'X'));
         dy = (med(e.touches, 'Y') - med(touches, 'Y'));
         x = sx + dx / s;
@@ -255,6 +257,7 @@
     img[0].addEventListener('touchcancel', touchend);
 
     function touchend(e) {
+        if (!opened) return;
         var time = (new Date()).getTime() - start;
 
         if (!e.touches.length) {
