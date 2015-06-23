@@ -1,6 +1,6 @@
 /**
  * http://aeqdev.com/tools/js/abigimage/
- * v 1.2.8
+ * v 1.3.0
  *
  * Copyright © 2014 Maksim Krylosov <Aequiternus@gmail.com>
  *
@@ -78,6 +78,13 @@
         }
     }
 
+    function replaceImage(oldImage, newSrc) {
+        // force clear cache
+        var newImage = oldImage.removeAttr('src').clone(true).attr('src', newSrc);
+        oldImage.replaceWith(newImage);
+        return newImage;
+    }
+
     function open(src, openI) {
         if ('number' === typeof src) {
             if (src === i || src < 0 || src > t.length - 1) {
@@ -98,12 +105,12 @@
 
         opened = true;
 
-        // removeAttr to force image reloading instead of replacing on load
-        img.removeAttr('src').attr('src', src);
+        img = replaceImage(img, src);
+        listenTouchEvents();
         var $tn = $(t[nextI()]);
-        imgNext.removeAttr('src').attr('src', $tn.data('href') || $tn.attr('href'));
+        imgNext = replaceImage(imgNext, $tn.data('href') || $tn.attr('href'));
         var $tp = $(t[prevI()]);
-        imgPrev.removeAttr('src').attr('src', $tp.data('href') || $tp.attr('href'));
+        imgPrev = replaceImage(imgPrev, $tp.data('href') || $tp.attr('href'));
 
         overlay.fadeIn(opts.fadeIn);
         layout.fadeIn(opts.fadeIn);
@@ -129,6 +136,10 @@
 
         $(document).unbind('keydown', key);
         return false;
+    }
+
+    function unbind() {
+        t.unbind('click.abigimage');
     }
 
     prevBtnWrapper.click(function() {
@@ -174,6 +185,14 @@
         bs = box[0].style;
 
     touchReset();
+    listenTouchEvents();
+
+    function listenTouchEvents() {
+        img[0].addEventListener('touchstart', touchstart);
+        img[0].addEventListener('touchmove', touchmove);
+        img[0].addEventListener('touchend', touchend);
+        img[0].addEventListener('touchcancel', touchend);
+    }
 
     function touchReset() {
         x = 0;
@@ -201,7 +220,7 @@
         );
     }
 
-    img[0].addEventListener('touchstart', function(e) {
+    function touchstart(e) {
         if (!opened) return;
         if (e.touches.length > 1) {
             multi = true;
@@ -223,9 +242,9 @@
         dy = 0;
         touches = e.touches;
         e.preventDefault();
-    });
+    }
 
-    img[0].addEventListener('touchmove', function(e) {
+    function touchmove(e) {
         if (!opened) return;
         dx = (med(e.touches, 'X') - med(touches, 'X'));
         dy = (med(e.touches, 'Y') - med(touches, 'Y'));
@@ -254,10 +273,7 @@
         }
         slideQueueAnimate(x, y, s, false);
         e.preventDefault();
-    });
-
-    img[0].addEventListener('touchend', touchend);
-    img[0].addEventListener('touchcancel', touchend);
+    }
 
     function touchend(e) {
         if (!opened) return;
@@ -449,7 +465,8 @@
         open: open,
         next: next,
         prev: prev,
-        close: close
+        close: close,
+        unbind: unbind
     };
 
     $.fn.abigimage.defaults = {

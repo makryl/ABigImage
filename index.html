@@ -74,14 +74,14 @@
 
 <p>ABigImage is jQuery plugin for viewing big versions of images.</p>
 
-<p>Current version: <b>1.2.8</b> (2014-07-24).</p>
+<p>Current version: <b>1.3.0</b> (2015-06-23).</p>
 
 
 
 <div class="coll">
     <ul>
-        <li><a href="abigimage.jquery.js">abigimage.jquery.js</a> (16.8Kb)</li>
-        <li><a href="abigimage.jquery.min.js">abigimage.jquery.min.js</a> (7.7Kb)</li>
+        <li><a href="abigimage.jquery.js">abigimage.jquery.js</a> (17.2Kb)</li>
+        <li><a href="abigimage.jquery.min.js">abigimage.jquery.min.js</a> (7.8Kb)</li>
         <li>Project on <a href="https://github.com/Aequiternus/ABigImage">GitHub</a></li>
     </ul>
 </div>
@@ -117,10 +117,10 @@
 </div>
 
 <div class="colr">
-    <ins class="adsbygoogle"
+    <!--<ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-7960201834628140"
-         data-ad-slot="1894666116"></ins>
+         data-ad-slot="1894666116"></ins>-->
 </div>
 
 
@@ -263,7 +263,18 @@ $.abigimage.prev();
 
 /* close image */
 $.abigimage.close();
+
+/* unbind abigimage events */
+$.abigimage.unbind();
 </code></pre>
+
+
+
+<h3>Changes</h3>
+
+<ul>
+    <li><b>1.3.0</b> - fixed image caching, added <code>unbind</code> method.</li>
+</ul>
 
 
 
@@ -277,13 +288,13 @@ $.abigimage.close();
 
 
 
-<link rel="stylesheet" href="//aeqdev.com/tools/css/default/adefault-light.min.css">
-<link rel="stylesheet" href="//yandex.st/highlightjs/8.0/styles/googlecode.min.css">
+<link rel="stylesheet" href="http://aeqdev.com/tools/css/default/adefault-light.min.css">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/googlecode.min.css">
 
-<script src="//code.jquery.com/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="abigimage.jquery.js"></script>
-<script src="//yandex.st/highlightjs/8.0/highlight.min.js"></script>
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+<!--<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
 
 <script>
     $(function() {

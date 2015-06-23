@@ -140,6 +140,12 @@ Also, you can use `data-href` attribute on any element, not only links.
     /* close image */
     $.abigimage.close();
 
+    /* unbind abigimage events */
+    $.abigimage.unbind();
+
+## Changes
+
+- *1.3.0* - fixed image caching, added `unbind` method.
 
 ## License
 
