@@ -145,7 +145,7 @@ Also, you can use `data-href` attribute on any element, not only links.
 
 ## Changes
 
-- *1.3.0* - fixed image caching, added `unbind` method.
+- **1.3.1** - fixed image caching, added `unbind` method.
 
 ## License
 

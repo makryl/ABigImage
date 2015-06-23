@@ -1,0 +1,41 @@
+{
+  "name": "abigimage",
+  "version": "1.3.1",
+  "author": "Maksim Krylosov <aequitenrus@gmail.com> (http://aeqdev.com/)",
+  "license": "MPL-2.0",
+  "homepage": "http://aeqdev.com/tools/js/abigimage/",
+  "bugs": "https://github.com/Aequiternus/ABigImage/issues",
+  "description": "ABigImage - view big versions of images. Fit mobile devices. Uses CSS3 transform and transition for smooth touch sliding. Touch slide left or right opens next or previous image, touch slide up or down closes image. Clicking image opens next one, clicking left side opens previous, clicking right side closes image. Hotkeys for next, previous and close buttons. Closing after viewing of all images. Preloading of next and previous images. Multi-touch zoom. Uses link's `href` or `data-href` attribute for large images. Fully customizable styles. Customizable bottom area. Customizable `onopen` event.",
+  "keywords": [
+    "jquery-plugin",
+    "ecosystem:jquery",
+    "image",
+    "picture",
+    "photo",
+    "view",
+    "viewer",
+    "big",
+    "large",
+    "enlarge",
+    "lightbox",
+    "popup",
+    "mobile",
+    "desktop",
+    "slideshow",
+    "touch",
+    "slide",
+    "keyboard",
+    "hotkey",
+    "responsive",
+    "html5",
+    "jquery"
+  ],
+  "main": "abigimage.jquery.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Aequiternus/ABigImage.git"
+  },
+  "dependencies": {
+    "jquery": ">=1.9"
+  }
+}

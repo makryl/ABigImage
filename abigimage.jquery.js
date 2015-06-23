@@ -1,6 +1,6 @@
 /**
  * http://aeqdev.com/tools/js/abigimage/
- * v 1.3.0
+ * v 1.3.1
  *
  * Copyright © 2014 Maksim Krylosov <Aequiternus@gmail.com>
  *
