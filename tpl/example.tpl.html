@@ -1,0 +1,24 @@
+<h2 class="clearfix">Example</h2>
+
+<p>
+    <a href="img/1-big.jpg"><img src="img/1-small.jpg" alt="First image"></a>
+    <a href="img/2-big.jpg"><img src="img/2-small.jpg" alt="Second image"></a>
+    <a href="img/3-big.jpg"><img src="img/3-small.jpg" alt="Third image"></a>
+    <a href="img/4-big.jpg"><img src="img/4-small.jpg" alt="Fourth image"></a>
+</p>
+
+<p>Live example, where I'm using and testing this plugin at the moment: <a href="http://kawaiinyan.com/" target="_blank">kawaiinyan.com</a>.</p>
+
+<script src="http://code.jquery.com/jquery.min.js"></script>
+<script src="abigimage.jquery.min.js"></script>
+<link rel="stylesheet" href="abigimage.jquery.min.css">
+
+<script>
+    $('a[href$=".jpg"]').abigimage({
+        onopen: function(target) {
+            this.bottom.html(
+                $('img', target).attr('alt')
+            );
+        }
+    });
+</script>

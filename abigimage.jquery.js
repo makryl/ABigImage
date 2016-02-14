@@ -1,164 +1,280 @@
 /**
  * http://aeqdev.com/tools/js/abigimage/
- * v 1.3.1
  *
- * Copyright © 2014 Maksim Krylosov <Aequiternus@gmail.com>
+ * MIT License
  *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Copyright (c) 2014-2016 Maksim Krylosov <aequiternus@gmail.com>
  */
 
 (function ($) {
 
-    var overlay            = $('<div>').css({display: 'none'}).appendTo('body'),
-        layout             = $('<div>').css({display: 'none'}).appendTo('body'),
-        box                = $('<div>').appendTo(layout),
-        prevBtnWrapper     = $('<div>').appendTo(box),
-        prevBtnBox         = $('<div>').appendTo(prevBtnWrapper),
-        prevBtn            = $('<div>').appendTo(prevBtnBox),
-        closeBtnWrapper    = $('<div>').appendTo(box),
-        closeBtnBox        = $('<div>').appendTo(closeBtnWrapper),
-        closeBtn           = $('<div>').appendTo(closeBtnBox),
-        img                = $('<img>').appendTo(box),
-        imgNext            = $('<img>').appendTo(box),
-        imgPrev            = $('<img>').appendTo(box),
-        bottom             = $('<div>').appendTo(layout);
+    var last,
+        current,
+        overlay     = $('<div>').addClass('abigimage-overlay')    .appendTo('body') .hide(),
+        layout      = $('<div>').addClass('abigimage-layout')     .appendTo('body') .hide(),
+        box         = $('<div>').addClass('abigimage-box')        .appendTo(layout),
+        prevBtnBox  = $('<div>').addClass('abigimage-prevBtnBox') .appendTo(box),
+        closeBtnBox = $('<div>').addClass('abigimage-closeBtnBox').appendTo(box),
+        prevBtn     = $('<div>').addClass('abigimage-prevBtn')    .appendTo(layout),
+        closeBtn    = $('<div>').addClass('abigimage-closeBtn')   .appendTo(layout),
+        bottom      = $('<div>').addClass('abigimage-bottom')     .appendTo(layout),
+        boxe        = box[0];
 
-    var opts = {},
-        t = null,
-        i = null,
-        d = 0,
-        opened = false;
-
-    function nextI() {
-        var j = i + 1;
-        if (j >= t.length) {
-            j = 0;
-        }
-        return j;
-    }
-
-    function prevI() {
-        var j = i - 1;
-        if (j < 0) {
-            j = t.length - 1;
-        }
-        return j;
-    }
-
-    function next() {
-        if (d === t.length - 1) {
-            return close();
-        } else {
-            ++d;
-            return open(nextI());
-        }
-    }
-
-    function prev() {
-        if (d === 1 - t.length) {
-            return close();
-        } else {
-            --d;
-            return open(prevI());
-        }
-    }
-
-    function key(event) {
-        if (opts.keyNext.indexOf(event.which) !== -1) {
-            next();
-            return false;
-        } else if (opts.keyPrev.indexOf(event.which) !== -1) {
-            prev();
-            return false;
-        } else if (opts.keyClose.indexOf(event.which) !== -1) {
-            close();
-            return false;
-        }
-    }
-
-    function replaceImage(oldImage, newSrc) {
-        // force clear cache
-        var newImage = oldImage.removeAttr('src').clone(true).attr('src', newSrc);
-        oldImage.replaceWith(newImage);
-        return newImage;
-    }
-
-    function open(src, openI) {
-        if ('number' === typeof src) {
-            if (src === i || src < 0 || src > t.length - 1) {
-                return;
-            }
-            i = src;
-            var $t = $(t[i]);
-            src = $t.data('href') || $t.attr('href');
-        } else {
-            if ('number' !== typeof openI) {
-                openI = -1;
-            }
-            if (i === openI) {
-                return;
-            }
-            i = openI;
-        }
-
-        opened = true;
-
-        img = replaceImage(img, src);
-        listenTouchEvents();
-        var $tn = $(t[nextI()]);
-        imgNext = replaceImage(imgNext, $tn.data('href') || $tn.attr('href'));
-        var $tp = $(t[prevI()]);
-        imgPrev = replaceImage(imgPrev, $tp.data('href') || $tp.attr('href'));
-
-        overlay.fadeIn(opts.fadeIn);
-        layout.fadeIn(opts.fadeIn);
-
-        opts.onopen.call(t, t[i], i);
-
-        $(document).unbind('keydown', key).bind('keydown', key);
-
-        return false;
-    }
-
-    function close() {
-        if (!opened) {
-            return;
-        }
-        opened = false;
-        i = null;
-        d = 0;
-        overlay.fadeOut(opts.fadeOut);
-        layout.fadeOut(opts.fadeOut, transitionEnd);
-
-        opts.onclose.call(t);
-
-        $(document).unbind('keydown', key);
-        return false;
-    }
-
-    function unbind() {
-        t.unbind('click.abigimage');
-    }
-
-    prevBtnWrapper.click(function() {
-        return prev();
-    });
-
-    closeBtnWrapper.click(function() {
-        return close();
-    });
-
-    var prevent = function(e) {
-        e.preventDefault();
+    $.fn.abigimage = function(options) {
+        var plugin = new ABigImage(this, options);
+        this._abigimage = plugin;
+        last = plugin;
+        return this.each(function(i) {
+            $(this).unbind('click.abigimage').bind('click.abigimage', function(event) {
+                prevent(event);
+                plugin.open(i);
+            });
+        });
     };
+
+    $.fn.abigimage.defaults = {
+        fadeIn:             'fast',
+        fadeOut:            'fast',
+        slideWidth:         .4,
+        slideVelocity:      .4,
+        zoomMin:            1.5,
+        zoomMax:            5,
+        doubleTapInterval:  400,
+        prevBtnHtml:        '&larr;',
+        closeBtnHtml:       'x',
+        keyNext:            [13 /* enter */, 32 /* space */, 39 /* right */, 40 /* down */],
+        keyPrev:            [8 /* backspace */, 37 /* left */, 38 /* up */],
+        keyClose:           [27 /* escape */, 35 /* end */, 36 /* home */],
+        onopen:             null,
+        onclose:            null
+    };
+
+    $.abigimage = {
+        overlay:            overlay,
+        layout:             layout,
+        prevBtnBox:         prevBtnBox,
+        prevBtn:            prevBtn,
+        closeBtnBox:        closeBtnBox,
+        closeBtn:           closeBtn,
+        box:                box,
+        bottom:             bottom,
+
+        open: function(src, index, sel) {
+            ((sel && sel._abigimage) || current || last).open(src, index);
+        },
+        close: function(sel) {
+            ((sel && sel._abigimage) || current || last).close();
+        },
+        next: function(sel) {
+            ((sel && sel._abigimage) || current || last).next();
+        },
+        prev: function(sel) {
+            ((sel && sel._abigimage) || current || last).prev();
+        },
+        unbind: function(sel) {
+            ((sel && sel._abigimage) || current || last).unbind();
+        }
+    };
+
+    prevBtnBox.click(function(event) {
+        prevent(event);
+        if (current) current.prev();
+    }).hover(function() {
+        prevBtn.addClass('abigimage-prevBtn-hover');
+    }, function() {
+        prevBtn.removeClass('abigimage-prevBtn-hover');
+    });
+
+    closeBtnBox.click(function(event) {
+        prevent(event);
+        if (current) current.close();
+    }).hover(function() {
+        closeBtn.addClass('abigimage-closeBtn-hover');
+    }, function() {
+        closeBtn.removeClass('abigimage-closeBtn-hover');
+    });
+
+    prevBtn.click(function(event) {
+        prevent(event);
+        if (current) current.prev();
+    });
+
+    closeBtn.click(function(event) {
+        prevent(event);
+        if (current) current.close();
+    });
 
     layout
         .on('touchmove', prevent)
         .on('wheel', prevent);
 
+    if (boxe.addEventListener) {
+        function listen(element, event, listener) { // just for minification
+            element.addEventListener(event, listener);
+        }
+        listen(boxe, 'touchstart', touchstart);
+        listen(boxe, 'touchmove', touchmove);
+        listen(boxe, 'touchend', touchend);
+        listen(boxe, 'touchcancel', touchend);
 
+        listen(boxe, 'webkitTransitionEnd', transitionEnd);
+        listen(boxe, 'mozTransitionEnd', transitionEnd);
+        listen(boxe, 'msTransitionEnd', transitionEnd);
+        listen(boxe, 'oTransitionEnd', transitionEnd);
+        listen(boxe, 'transitionend', transitionEnd);
+    }
+
+    function ABigImage(elements, options) {
+        $.extend(this, $.fn.abigimage.defaults, options);
+
+        this.elements    = elements;
+
+        this.overlay     = overlay;
+        this.layout      = layout;
+        this.prevBtnBox  = prevBtnBox;
+        this.prevBtn     = prevBtn;
+        this.closeBtnBox = closeBtnBox;
+        this.closeBtn    = closeBtn;
+        this.box         = box;
+        this.bottom      = bottom;
+
+        this.index       = -1;
+        this.distance    = 0;
+    }
+
+    ABigImage.prototype.open = function(src, index) {
+        current = this;
+
+        var currLink;
+        if ('number' == typeof src) {
+            index = src;
+            if (index == this.index || index < 0 || index > this.elements.length - 1) {
+                return;
+            }
+            currLink = $(this.elements[index]);
+            src = currLink.data('href') || currLink.attr('href');
+        } else {
+            if ('number' != typeof index) {
+                index = this.index;
+            } else if (index == this.index) {
+                return;
+            }
+        }
+
+        this.index = index;
+
+        this.prevBtn.html(this.prevBtnHtml);
+        this.closeBtn.html(this.closeBtnHtml);
+        this.bottom.html('');
+
+        $('img', this.box).remove();
+
+        this.box.removeClass('abigimage-box-zoom');
+        slideAnimate(0, 0, 1);
+
+        this.img = createImage('abigimage-img', src)
+            .click(function(event) {
+                prevent(event);
+                if (current) current.next();
+            });
+
+        var nextElement = $(this.elements[this.nextIndex()]);
+        this.imgNext = createImage('abigimage-imgNext', nextElement.data('href') || nextElement.attr('href'));
+        var prevElement = $(this.elements[this.prevIndex()]);
+        this.imgPrev = createImage('abigimage-imgPrev', prevElement.data('href') || prevElement.attr('href'));
+
+        overlay.fadeIn();
+        layout.fadeIn();
+
+        $(document).unbind('keydown', documentKeydown).bind('keydown', documentKeydown);
+
+        if (this.onopen) this.onopen.call(this, currLink);
+    };
+
+    ABigImage.prototype.next = function() {
+        if (this.distance == this.elements.length - 1) {
+            this.close();
+        } else {
+            ++this.distance;
+            this.elements[this.nextIndex()].click();
+            //this.open(this.nextIndex());
+        }
+    };
+
+    ABigImage.prototype.prev = function() {
+        if (this.distance == 1 - this.elements.length) {
+            this.close();
+        } else {
+            --this.distance;
+            this.elements[this.prevIndex()].click();
+            //this.open(this.prevIndex());
+        }
+    };
+
+    ABigImage.prototype.close = function() {
+        if (!current) return;
+
+        $(document).unbind('keydown', documentKeydown);
+
+        overlay.fadeOut(this.fadeOut);
+        layout.fadeOut(this.fadeOut, transitionEnd);
+
+        if (this.onclose) this.onclose.call(this);
+
+        this.index = -1;
+        this.distance = 0;
+
+        current = null;
+    };
+
+    ABigImage.prototype.unbind = function() {
+        this.close();
+        this.elements.each(function() {
+            $(this).unbind('click.abigimage');
+        })
+    };
+
+    ABigImage.prototype.key = function(keyCode) {
+        if (this.keyNext.indexOf(keyCode) != -1) {
+            this.next();
+        } else if (this.keyPrev.indexOf(keyCode) != -1) {
+            this.prev();
+        } else if (this.keyClose.indexOf(keyCode) != -1) {
+            this.close();
+        }
+    };
+
+    ABigImage.prototype.nextIndex = function() {
+        var index = this.index + 1;
+        if (index >= this.elements.length) {
+            index = 0;
+        }
+        return index;
+    };
+
+    ABigImage.prototype.prevIndex = function() {
+        var index = this.index - 1;
+        if (index < 0) {
+            index = this.elements.length - 1;
+        }
+        return index;
+    };
+
+    function createImage(className, src) {
+        return $('<img>').addClass(className).attr('src', src).appendTo(box);
+    }
+
+    function documentKeydown(event) {
+        if (current) {
+            prevent(event);
+            current.key(event.which);
+        }
+    }
+
+    function prevent(event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
 
     var sx,
         sy,
@@ -172,68 +288,32 @@
         iw,
         ih,
 
+        dstart,
         start,
         width,
         height,
         minD,
         vert,
         touches,
-        multi,
-
-        slideTransition = false,
-        slideQueueFn = [null, null, null],
-        bs = box[0].style;
-
-    touchReset();
-    listenTouchEvents();
-
-    function listenTouchEvents() {
-        img[0].addEventListener('touchstart', touchstart);
-        img[0].addEventListener('touchmove', touchmove);
-        img[0].addEventListener('touchend', touchend);
-        img[0].addEventListener('touchcancel', touchend);
-    }
-
-    function touchReset() {
-        x = 0;
-        y = 0;
-        s = 1;
-        vert = null;
-        multi = false;
-        if (opts.imgCSS) {
-            img.css({zIndex: opts.imgCSS.zIndex});
-        }
-    }
-
-    function med(ts, c) {
-        var p = 0;
-        for (var t = 0, l = ts.length; t < l; t++) {
-            p += ts[t]['page' + c];
-        }
-        return p / l;
-    }
-
-    function dis(e) {
-        return Math.sqrt(
-            Math.pow(e.touches[0].pageX - e.touches[1].pageX, 2) +
-            Math.pow(e.touches[0].pageY - e.touches[1].pageY, 2)
-        );
-    }
+        intr,
+        ontr,
+        bs = boxe.style;
 
     function touchstart(e) {
-        if (!opened) return;
+        if (!current) return;
+
         if (e.touches.length > 1) {
-            multi = true;
             k = dis(e);
-            img.css({zIndex: opts.prevBtnBoxCSS.zIndex});
+            current.box.addClass('abigimage-box-zoom');
         } else {
             vert = null;
+            dstart = start;
             start = (new Date()).getTime();
             width = box.width() * 0.34;
             height = box.height();
-            minD = opts.slideWidth * width;
-            iw = img.width();
-            ih = img.height();
+            minD = current.slideWidth * width;
+            iw = current.img.width();
+            ih = current.img.height();
         }
         sx = x;
         sy = y;
@@ -241,11 +321,12 @@
         dx = 0;
         dy = 0;
         touches = e.touches;
-        e.preventDefault();
+        prevent(e);
     }
 
     function touchmove(e) {
-        if (!opened) return;
+        if (!current) return;
+
         dx = (med(e.touches, 'X') - med(touches, 'X'));
         dy = (med(e.touches, 'Y') - med(touches, 'Y'));
         x = sx + dx / s;
@@ -253,7 +334,7 @@
         if (e.touches.length > 1) {
             s = Math.max(1, ss * (dis(e) / k));
         }
-        if (s > opts.zoomMin) {
+        if (s > current.zoomMin) {
             var mx = 0.5 * (iw - (iw / s));
             var my = 0.5 * (ih - (ih / s));
             x = Math.max(-mx, Math.min(mx, x));
@@ -271,21 +352,24 @@
                 y = 0;
             }
         }
-        slideQueueAnimate(x, y, s, false);
-        e.preventDefault();
+        slideAnimate(x, y, s);
+        prevent(e);
     }
 
     function touchend(e) {
-        if (!opened) return;
-        var time = (new Date()).getTime() - start;
+        if (!current) return;
+
+        var end = (new Date()).getTime();
+        var time = end - start;
 
         if (!e.touches.length) {
-            if (s <= opts.zoomMin) {
+            if (s <= current.zoomMin) {
                 if (time <= 1 || (dx >= -1 && dx <= 1 && dy >= -1 && dy <= 1)) {
-                    if (multi) {
-                        slideAnimate(0, 0, 1);
+                    if (start - dstart <= current.doubleTapInterval) {
+                        current.box.addClass('abigimage-box-zoom');
+                        slideAnimate(x, y, current.zoomMax, true);
                     } else {
-                        slideNext(true);
+                        slideAnimate(0, 0, 1, true);
                     }
                 } else {
                     if (vert) {
@@ -293,7 +377,7 @@
                         if (ady > minD) {
                             slideClose();
                         } else {
-                            if (ady / time > opts.slideVelocity) {
+                            if (ady / time > current.slideVelocity) {
                                 slideClose();
                             } else {
                                 slideBack();
@@ -305,7 +389,7 @@
                         } else if (dx > minD) {
                             slidePrev();
                         } else {
-                            if (Math.abs(dx) / time > opts.slideVelocity) {
+                            if (Math.abs(dx) / time > current.slideVelocity) {
                                 if (dx < 0) {
                                     slideNext();
                                 } else {
@@ -317,77 +401,62 @@
                         }
                     }
                 }
-                touchReset();
-            } else if (s > opts.zoomMax) {
-                s = opts.zoomMax;
-
-                slideQueueAnimate(x, y, s, true);
+            } else if (s > current.zoomMax) {
+                slideAnimate(x, y, current.zoomMax, true);
+            } else if (s > current.zoomMin) {
+                if (end - dstart <= current.doubleTapInterval) {
+                    slideBack();
+                }
             }
-        }
-
-        if (s <= opts.zoomMin) {
-            img.css({zIndex: opts.imgCSS.zIndex});
         }
 
         touches = e.touches;
-        e.preventDefault();
+        prevent(e);
     }
 
-    box.on('transitionend webkitTransitionEnd msTransitionEnd oTransitionEnd', transitionEnd);
-
-    function transitionEnd() {
-        slideTransition = false;
-        for (var i = 0; i < 2 ; i++) {
-            if (slideQueueFn[i]) {
-                slideQueueFn[i]();
-                slideQueueFn[i] = null;
-                if (slideTransition) break;
-            }
+    function med(ts, c) {
+        var p = 0;
+        for (var t = 0, l = ts.length; t < l; t++) {
+            p += ts[t]['page' + c];
         }
+        return p / l;
     }
 
-    img.click(function() {
-        return next();
-    });
+    function dis(e) {
+        return Math.sqrt(
+            Math.pow(e.touches[0].pageX - e.touches[1].pageX, 2) +
+            Math.pow(e.touches[0].pageY - e.touches[1].pageY, 2)
+        );
+    }
 
-    function slideNext(reset) {
-        slideQueueAnimate(reset ? 0 : -width, 0, 1, !reset);
-        slideQueueEnd(next);
+    function slideNext() {
+        slideAnimate(-width, 0, 1, true, function() {
+            current.next();
+        });
     }
 
     function slidePrev() {
-        slideQueueAnimate(width, 0, 1, true);
-        slideQueueEnd(prev);
+        slideAnimate(width, 0, 1, true, function() {
+            current.prev();
+        });
     }
 
     function slideBack() {
-        slideQueueAnimate(0, 0, 1, true);
+        current.box.removeClass('abigimage-box-zoom');
+        slideAnimate(0, 0, 1, true);
     }
 
     function slideClose() {
         slideBack();
-        slideQueueEnd();
-        close();
+        current.close();
     }
 
-    function slideQueue(fn, i) {
-        if (slideTransition) {
-            slideQueueFn[i || 0] = fn;
-        } else {
-            fn();
-        }
-    }
-
-    function slideQueueAnimate(x, y, s, transition, i) {
-        slideQueue(function() {slideAnimate(x, y, s, transition)}, i);
-    }
-
-    function slideQueueEnd(fn) {
-        slideQueue(function() {slideAnimate(0, 0, 1, false); if (fn) fn();}, 1);
-    }
-
-    function slideAnimate(x, y, s, transition) {
-        slideTransition = transition;
+    function slideAnimate(tx, ty, ts, transition, onend) {
+        x = tx;
+        y = ty;
+        s = ts;
+        intr = transition;
+        ontr = onend;
         var transform = 'scale(' + s + ') translate3d(' + x + 'px, ' + y + 'px, 0)';
         bs.transition = transition ? 'all .2s ease-out' : '';
         bs.webkitTransform = transform;
@@ -397,149 +466,13 @@
         bs.transform = transform;
     }
 
-    $.fn.abigimage = function(options) {
-
-        t = this;
-
-        opts = $.extend(true, $.fn.abigimage.defaults, options);
-
-        this.overlay            = overlay           .attr(opts.overlayAttrs)            .css(opts.overlayCSS);
-        this.layout             = layout            .attr(opts.layoutAttrs)             .css(opts.layoutCSS);
-        this.box                = box               .attr(opts.boxAttrs)                .css(opts.boxCSS);
-        this.prevBtnWrapper     = prevBtnWrapper    .attr(opts.prevBtnWrapperAttrs)     .css(opts.prevBtnWrapperCSS);
-        this.prevBtnBox         = prevBtnBox        .attr(opts.prevBtnBoxAttrs)         .css(opts.prevBtnBoxCSS);
-        this.prevBtn            = prevBtn           .attr(opts.prevBtnAttrs)            .css(opts.prevBtnCSS)           .html(opts.prevBtnHtml);
-        this.closeBtnWrapper    = closeBtnWrapper   .attr(opts.closeBtnWrapperAttrs)    .css(opts.closeBtnWrapperCSS);
-        this.closeBtnBox        = closeBtnBox       .attr(opts.closeBtnBoxAttrs)        .css(opts.closeBtnBoxCSS);
-        this.closeBtn           = closeBtn          .attr(opts.closeBtnAttrs)           .css(opts.closeBtnCSS)          .html(opts.closeBtnHtml);
-        this.img                = img               .attr(opts.imgAttrs)                .css(opts.imgCSS);
-        this.imgNext            = imgNext           .attr(opts.imgNextAttrs)            .css(opts.imgNextCSS);
-        this.imgPrev            = imgPrev           .attr(opts.imgPrevAttrs)            .css(opts.imgPrevCSS);
-        this.bottom             = bottom            .attr(opts.bottomAttrs)             .css(opts.bottomCSS);
-
-        var prevBtnUnHoverCSS = {};
-        for (var p in opts.prevBtnHoverCSS) {
-            if (opts.prevBtnCSS) {
-                prevBtnUnHoverCSS[p] = opts.prevBtnCSS[p];
-            }
+    function transitionEnd() {
+        intr = false;
+        if (ontr) {
+            var f = ontr;
+            ontr = null;
+            f();
         }
-        var closeBtnUnHoverCSS = {};
-        for (var p in opts.closeBtnHoverCSS) {
-            if (opts.closeBtnCSS) {
-                closeBtnUnHoverCSS[p] = opts.closeBtnCSS[p];
-            }
-        }
-        var bottomUnHoverCSS = {};
-        for (var p in opts.bottomHoverCSS) {
-            if (opts.bottomCSS) {
-                bottomUnHoverCSS[p] = opts.bottomCSS[p];
-            }
-        }
-
-        this.prevBtnWrapper.hover(function() {
-            prevBtn.stop().animate(opts.prevBtnHoverCSS, opts.fadeIn);
-        }, function() {
-            prevBtn.stop().animate(prevBtnUnHoverCSS, opts.fadeOut);
-        });
-
-        this.closeBtnWrapper.hover(function() {
-            closeBtn.stop().animate(opts.closeBtnHoverCSS, opts.fadeIn);
-        }, function () {
-            closeBtn.stop().animate(closeBtnUnHoverCSS, opts.fadeOut);
-        });
-
-        this.bottom.hover(function() {
-            bottom.stop().animate(opts.bottomHoverCSS, opts.fadeIn);
-        }, function () {
-            bottom.stop().animate(bottomUnHoverCSS, opts.fadeOut);
-        });
-
-        return this.each(function(i) {
-            $(this).unbind('click.abigimage').bind('click.abigimage', function() {
-                return open(i);
-            });
-        });
-    };
-
-    $.abigimage = {
-        open: open,
-        next: next,
-        prev: prev,
-        close: close,
-        unbind: unbind
-    };
-
-    $.fn.abigimage.defaults = {
-        fadeIn:               'fast',
-        fadeOut:              'fast',
-
-        slideWidth:           .4,
-        slideVelocity:        .4,
-
-        zoomMin:              1.5,
-        zoomMax:              5,
-
-        prevBtnHtml:          '&larr;',
-        closeBtnHtml:         'x',
-
-        keyNext:              [13 /* enter */, 32 /* space */, 39 /* right */, 40 /* down */],
-        keyPrev:              [8 /* backspace */, 37 /* left */, 38 /* up */],
-        keyClose:             [27 /* escape */, 35 /* end */, 36 /* home */],
-
-        onopen:               function() {},
-        onclose:              function() {},
-
-        overlayCSS:           {position: 'fixed', zIndex: 101, top: 0, right: 0, bottom: 0, left: 0,
-                                  backgroundColor: '#000', opacity: .9},
-        layoutCSS:            {position: 'fixed', zIndex: 101, top: 0, right: 0, bottom: 0, left: 0,
-                                  '-webkit-user-select': 'none', '-moz-user-select': 'none', 'user-select': 'none',
-                                  '-webkit-tap-highlight-color': 'rgba(0, 0, 0, 0)',
-                                  lineHeight: 2.5},
-        boxCSS:               {position: 'absolute', width: '312.5%', height: '100%', left: '-106.25%', top: 0},
-
-        prevBtnWrapperCSS:    {cursor: 'pointer', position: 'absolute', top: 0, right: '50%', bottom: 0, left: 0},
-        closeBtnWrapperCSS:   {cursor: 'pointer', position: 'absolute', top: 0, right: 0, bottom: 0, left: '50%'},
-
-        prevBtnBoxCSS:        {position: 'absolute', zIndex: 103, top: 0, bottom: 0, left: '68%'},
-        closeBtnBoxCSS:       {position: 'absolute', zIndex: 103, top: 0, bottom: 0, right: '68%'},
-
-        prevBtnCSS:           {color: '#fff', backgroundColor: '#000', opacity: .5,
-                                  padding: '0 1em', borderRadius: '0 0 1ex 0'},
-        closeBtnCSS:          {color: '#fff', backgroundColor: '#000', opacity: .5,
-                                  padding: '0 1em', borderRadius: '0 0 0 1ex'},
-
-        prevBtnHoverCSS:      {opacity: 1},
-        closeBtnHoverCSS:     {opacity: 1},
-
-        imgCSS:               {position: 'absolute', zIndex: 102, margin: 'auto', width: 'auto',
-                                  top: 0, right: 0, bottom: 0, left: 0,
-                                  display: 'block', cursor: 'pointer', maxWidth: '32%', maxHeight: '100%'},
-        imgNextCSS:           {position: 'absolute', margin: 'auto', width: 'auto',
-                                  top: 0, right: 0, bottom: 0, left: '68%',
-                                  display: 'block', maxWidth: '32%', maxHeight: '100%'},
-        imgPrevCSS:           {position: 'absolute', margin: 'auto', width: 'auto',
-                                  top: 0, right: '68%', bottom: 0, left: 0,
-                                  display: 'block', maxWidth: '32%', maxHeight: '100%'},
-
-        bottomCSS:            {position: 'fixed', zIndex: 104, right: 0, bottom: 0, left: 0,
-                                  '-webkit-user-select': 'text', '-moz-user-select': 'text', 'user-select': 'text',
-                                  backgroundColor: '#000', color: '#fff', opacity: .5,
-                                  padding: '0 1em', textAlign: 'center'},
-        bottomHoverCSS:       {opacity: 1},
-
-        overlayAttrs:         {},
-        layoutAttrs:          {},
-        boxAttrs:             {},
-        prevBtnWrapperAttrs:  {},
-        prevBtnBoxAttrs:      {},
-        prevBtnAttrs:         {},
-        closeBtnWrapperAttrs: {},
-        closeBtnBoxAttrs:     {},
-        closeBtnAttrs:        {},
-        imgAttrs:             {},
-        imgNextAttrs:         {},
-        imgPrevAttrs:         {},
-        bottomAttrs:          {}
-    };
+    }
 
 }(jQuery));

@@ -1,0 +1,152 @@
+/**
+ * http://aeqdev.com/tools/js/abigimage/
+ *
+ * MIT License
+ *
+ * Copyright (c) 2014-2016 Maksim Krylosov <aequiternus@gmail.com>
+ */
+
+.abigimage-overlay {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    border: 1px solid #000; /* android chrome fix O_o */
+    opacity: .9;
+}
+
+.abigimage-layout {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    line-height: 2.5;
+}
+
+.abigimage-prevBtnBox {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 50%;
+    bottom: 0;
+    left: 0;
+}
+
+.abigimage-closeBtnBox {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 50%;
+}
+
+.abigimage-prevBtn {
+    color: #fff;
+    background-color: #000;
+    opacity: .5;
+    padding: 0 1em;
+    border-radius: 0 0 1ex 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all .2s ease-in-out;
+}
+
+.abigimage-closeBtn {
+    color: #fff;
+    background-color: #000;
+    opacity: .5;
+    padding: 0 1em;
+    border-radius: 0 0 0 1ex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transition: all .2s ease-in-out;
+}
+
+.abigimage-prevBtn:hover, .abigimage-prevBtn-hover,
+.abigimage-closeBtn:hover, .abigimage-closeBtn-hover {
+    opacity: 1;
+}
+
+.abigimage-box {
+    position: absolute;
+    width: 312.5%;
+    height: 100%;
+    left: -106.25%;
+    top: 0;
+}
+
+.abigimage-box-zoom {
+    z-index: 101;
+}
+
+.abigimage-img {
+    position: absolute;
+    margin: auto;
+    width: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+    cursor: pointer;
+    max-width: 32%;
+    max-height: 100%;
+}
+
+.abigimage-imgNext {
+    position: absolute;
+    margin: auto;
+    width: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 68%;
+    display: block;
+    max-width: 32%;
+    max-height: 100%;
+}
+
+.abigimage-imgPrev {
+    position: absolute;
+    margin: auto;
+    width: auto;
+    top: 0;
+    right: 68%;
+    bottom: 0;
+    left: 0;
+    display: block;
+    max-width: 32%;
+    max-height: 100%;
+}
+
+.abigimage-bottom {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    user-select: text;
+    background-color: #000;
+    color: #fff;
+    opacity: .5;
+    padding: 0 1em;
+    text-align: center;
+    transition: all .2s ease-in-out;
+}
+
+.abigimage-bottom:hover {
+    opacity: 1;
+}

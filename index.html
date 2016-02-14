@@ -1,91 +1,117 @@
 <!doctype html>
 <html>
-    <head>
-        <title>ABigImage | js | tools | aeqdev.com</title>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="ABigImage is jQuery plugin for viewing big versions of images.">
-        <style>
-            body
-            {
-                font-family: Arial, sans-serif;
+<head>
+    <title>ABigImage | js | tools | aeqdev.com</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="ABigImage is jQuery plugin for viewing big versions of images.">
+    <link rel="stylesheet" href="http://aeqdev.com/tools/css/default/adefault-light.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .wrapper {
+            max-width: 200mm;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 700px) {
+            .coll {
+                float: left;
+                width: 50%;
             }
 
-            .wrapper
-            {
-                max-width: 200mm;
-                margin: 0 auto;
-            }
-
-            a.logo
-            {
-                display: block;
+            .colr {
                 float: right;
-                color: #808080;
-                text-decoration: none;
+                width: 300px;
             }
+        }
 
-            a:hover.logo
-            {
-                background: none;
-                color: #808080;
-                text-decoration: underline;
-            }
+        .clearfix {
+            clear: both;
+        }
 
-            a.logo em
-            {
-                color: #4080c0;
-                font-style: normal;
-            }
+        /* Highlight.js */
+        /* Darkula color scheme from the JetBrains family of IDEs */
 
-            pre
-            {
-                padding: .2em 0;
-            }
+        .hljs {
+            display: block;
+            overflow-x: auto;
+            padding: 0.5em;
+            background: #2b2b2b;
+        }
 
-            @media (min-width: 700px) {
-                .coll {
-                    float: left;
-                    width: 50%;
-                }
+        .hljs {
+            color: #bababa;
+        }
 
-                .colr {
-                    float: right;
-                    width: 300px;
-                }
-            }
+        .hljs-strong,
+        .hljs-emphasis {
+            color: #a8a8a2;
+        }
 
-            .clearfix {
-                clear: both;
-            }
-        </style>
-    </head>
-    <body>
+        .hljs-bullet,
+        .hljs-quote,
+        .hljs-link,
+        .hljs-number,
+        .hljs-regexp,
+        .hljs-literal {
+            color: #6896ba;
+        }
 
-        <div class="wrapper">
+        .hljs-code,
+        .hljs-selector-class {
+            color: #a6e22e;
+        }
 
-            <p>
-                <a class="logo" href="/"><em>Aeq</em>dev</a>
+        .hljs-emphasis {
+            font-style: italic;
+        }
 
+        .hljs-keyword,
+        .hljs-selector-tag,
+        .hljs-section,
+        .hljs-attribute,
+        .hljs-name,
+        .hljs-variable {
+            color: #cb7832;
+        }
 
+        .hljs-params {
+            color: #b9b9b9;
+        }
 
-<h1>ABigImage</h1>
+        .hljs-string,
+        .hljs-subst,
+        .hljs-type,
+        .hljs-built_in,
+        .hljs-builtin-name,
+        .hljs-symbol,
+        .hljs-selector-id,
+        .hljs-selector-attr,
+        .hljs-selector-pseudo,
+        .hljs-template-tag,
+        .hljs-template-variable,
+        .hljs-addition {
+            color: #e0c46c;
+        }
 
-<p>ABigImage is jQuery plugin for viewing big versions of images.</p>
+        .hljs-comment,
+        .hljs-deletion,
+        .hljs-meta {
+            color: #7f7f7f;
+        }
+    </style>
+</head>
+<body>
 
-<p>Current version: <b>1.3.0</b> (2015-06-23).</p>
+<div class="wrapper">
 
-
-
-<div class="coll">
-    <ul>
-        <li><a href="abigimage.jquery.js">abigimage.jquery.js</a> (17.2Kb)</li>
-        <li><a href="abigimage.jquery.min.js">abigimage.jquery.min.js</a> (7.8Kb)</li>
-        <li>Project on <a href="https://github.com/Aequiternus/ABigImage">GitHub</a></li>
-    </ul>
-</div>
-
+<h1 id="abigimage">ABigImage</h1>
+<p><code>ABigImage</code> is jQuery plugin for viewing big versions of images.</p>
+<p>Current version <strong>2.0.0</strong> (2016-02-14).</p>
 <div class="colr">
     <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
         <input type="hidden" name="cmd" value="_s-xclick">
@@ -95,36 +121,26 @@
     </form>
 </div>
 
-
-
-<h2>Features</h2>
-
-<div class="coll">
-    <ul>
-        <li>Fit mobile devices.</li>
-        <li>Uses CSS3 transform and transition for smooth touch sliding.</li>
-        <li>Touch slide left or right opens next or previous image, touch slide up or down closes image.</li>
-        <li>Clicking image opens next one, clicking left side opens previous, clicking right side closes image.</li>
-        <li>Hotkeys for next, previous and close buttons.</li>
-        <li>Closing after viewing of all images.</li>
-        <li>Preloading of next and previous images.</li>
-        <li>Multi-touch zoom.</li>
-        <li>Uses link's <code>href</code> or <code>data-href</code> attribute for large images.</li>
-        <li>Fully customizable styles.</li>
-        <li>Customizable bottom area.</li>
-        <li>Customizable <code>onopen</code> event.</li>
-    </ul>
-</div>
-
-<div class="colr">
-    <!--<ins class="adsbygoogle"
-         style="display:inline-block;width:300px;height:250px"
-         data-ad-client="ca-pub-7960201834628140"
-         data-ad-slot="1894666116"></ins>-->
-</div>
-
-
-
+<ul>
+<li><a href="abigimage.jquery.js">abigimage.jquery.js</a> (14.1 kB) <a href="abigimage.jquery.min.js">min</a> (5.9 kB, gzipped 2.2 kB)</li>
+<li><a href="abigimage.jquery.css">abigimage.jquery.css</a> (2.6 kB) <a href="abigimage.jquery.min.css">min</a> (1.5 kB, gzipped 549 bytes)</li>
+<li>Fork at <a href="https://github.com/makryl/ABigImage">Github</a></li>
+</ul>
+<h2 id="features">Features</h2>
+<ul>
+<li>Fit mobile devices.</li>
+<li>Uses CSS3 transform and transition for smooth touch sliding.</li>
+<li>Touch slide left or right opens next or previous image, touch slide up or down closes image.</li>
+<li>Multi-touch and double-tap zoom.</li>
+<li>Clicking image opens next one, clicking left side opens previous, clicking right side closes image.</li>
+<li>Hotkeys for next, previous and close buttons.</li>
+<li>Closing after viewing of all images.</li>
+<li>Preloading of next and previous images.</li>
+<li>Uses link&#39;s <code>href</code> or <code>data-href</code> attribute for large images.</li>
+<li>Fully customizable styles.</li>
+<li>Customizable bottom area.</li>
+<li>Customizable <code>onopen</code> and <code>onclose</code> event.</li>
+</ul>
 <h2 class="clearfix">Example</h2>
 
 <p>
@@ -136,32 +152,43 @@
 
 <p>Live example, where I'm using and testing this plugin at the moment: <a href="http://kawaiinyan.com/" target="_blank">kawaiinyan.com</a>.</p>
 
-<h2>Usage</h2>
+<script src="http://code.jquery.com/jquery.min.js"></script>
+<script src="abigimage.jquery.min.js"></script>
+<link rel="stylesheet" href="abigimage.jquery.min.css">
 
-<h3>Basic</h3>
+<script>
+    $('a[href$=".jpg"]').abigimage({
+        onopen: function(target) {
+            this.bottom.html(
+                $('img', target).attr('alt')
+            );
+        }
+    });
+</script>
 
-<p>Add jQuery and ABigImage scripts in head of page.</p>
-
-<pre><code>&lt;script src="jquery.js"&gt;&lt;/script&gt;
-&lt;script src="abigimage.jquery.js"&gt;&lt;/script&gt;
+<h2 id="usage">Usage</h2>
+<h3 id="basic">Basic</h3>
+<p>Add jQuery and ABigImage scripts, and ABigImage styles at your page.</p>
+<pre><code class="hljs lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"jquery.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"abigimage.jquery.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"abigimage.jquery.css"</span>&gt;</span>
 </code></pre>
-
 <p>Call plugin on selector of enlargeable images links.</p>
+<pre><code class="hljs lang-js">$(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-comment">/* all links with class "myimgclass" */</span>
+    $(<span class="hljs-string">'.myimgclass'</span>).abigimage();
 
-<pre><code>$(function() {
-    /* all links with class "myimgclass" */
-    $('.myimgclass').abigimage();
+    <span class="hljs-comment">/* or all links inside element with class "myimgboxclass" */</span>
+    $(<span class="hljs-string">'.myimgboxclass a'</span>).abigimage();
 
-    /* or all links to "*.jpg" images */
-    $('a[href$=".jpg"]').abigimage();
+    <span class="hljs-comment">/* or all links to "*.jpg" images */</span>
+    $(<span class="hljs-string">'a[href$=".jpg"]'</span>).abigimage();
 
-    /* or all links to images under dir "/my/images/dir/" */
-    $('a[href^="/my/images/dir/"]').abigimage();
+    <span class="hljs-comment">/* or all links to images under dir "/my/images/dir/" */</span>
+    $(<span class="hljs-string">'a[href^="/my/images/dir/"]'</span>).abigimage();
 });
 </code></pre>
-
-<h3>Options</h3>
-
+<h3 id="options">Options</h3>
 <ul>
 <li><code>fadeIn</code> - fade in duration or <a href="http://api.jquery.com/fadein/">options</a> (default: <code>fast</code>).</li>
 <li><code>fadeOut</code> - fade out duration or <a href="http://api.jquery.com/fadeout/">options</a> (default: <code>fast</code>).</li>
@@ -169,148 +196,95 @@
 <li><code>slideVelocity</code> - slide velocity to switch or close image (pixels per millisecond, default: 0.4).</li>
 <li><code>zoomMin</code> - minimal zoom that will hold (default: 1.5).</li>
 <li><code>zoomMax</code> - maximal zoom (default: 5).</li>
-<li><code>prevBtnHtml</code> - html of "previous" button (default: <code>&larr;</code>).</li>
-<li><code>closeBtnHtml</code> - html of "close" button (default: <code>x</code>).</li>
-<li><code>keyNext</code> - hotkeys for "next" button (by default: 13 enter, 32 space, 39 right, 40 down).</li>
-<li><code>keyPrev</code> - hotkeys for "previous" button (by default: 8 backspace, 37 left, 38 up).</li>
-<li><code>keyClose</code> - hotkeys for "close" button (by default: 27 escape, 35 end, 36 home).</li>
+<li><code>doubleTapInterval</code> - zoom double-tap interval (milliseconds, default: 400).</li>
+<li><code>prevBtnHtml</code> - html of &quot;previous&quot; button (default: <code>&amp;larr;</code>).</li>
+<li><code>closeBtnHtml</code> - html of &quot;close&quot; button (default: <code>x</code>).</li>
+<li><code>keyNext</code> - hotkeys for &quot;next&quot; button (default: 13 enter, 32 space, 39 right, 40 down).</li>
+<li><code>keyPrev</code> - hotkeys for &quot;previous&quot; button (default: 8 backspace, 37 left, 38 up).</li>
+<li><code>keyNext</code> - hotkeys for &quot;close&quot; button (default: 27 escape, 35 end, 36 home).</li>
 <li><code>onopen</code> - function called when image opens.</li>
-<li><code>*Attrs</code> - plugin elements attributes.</li>
-<li><code>*CSS</code> - plugin elements CSS.</li>
-<li><code>prevBtnHoverCSS</code> - "previous" button on hover CSS.</li>
-<li><code>closeBtnHoverCSS</code> - "close" button on hover CSS.</li>
-<li><code>bottomHoverCSS</code> - bottom area on hover CSS.</li>
+<li><code>onclose</code> - function called when image closes.</li>
 </ul>
-
-<p>Plugin generates next html code:</p>
-
-<pre><code>&lt;!-- overlay --&gt;
-&lt;div&gt;&lt;/div&gt;
-&lt;!-- layout --&gt;
-&lt;div&gt;
-    &lt;!-- box --&gt;
-    &lt;div&gt;
-        &lt;!-- prevBtnWrapper (clickable behind the image, width 50%) --&gt;
-        &lt;div&gt;
-            &lt;!-- prevBtnBox (clickable above the image, button width) --&gt;
-            &lt;div&gt;
-                &lt;!-- prevBtn --&gt;
-                &lt;div&gt;&lt;!-- prevBtnHtml --&gt;&lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-        &lt;!-- closeBtnWrapper (clickable behind the image, width 50%) --&gt;
-        &lt;div&gt;
-            &lt;!-- closeBtnBox (clickable above the image, button width) --&gt;
-            &lt;div&gt;
-                &lt;!-- closeBtn --&gt;
-                &lt;div&gt;&lt;!-- closeBtnHtml --&gt;&lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-        &lt;!-- img --&gt;
-        &lt;img&gt;
-        &lt;!-- imgNext --&gt;
-        &lt;img&gt;
-        &lt;!-- imgPrev --&gt;
-        &lt;img&gt;
-    &lt;/div&gt;
-    &lt;!-- bottom --&gt;
-    &lt;div&gt;&lt;/div&gt;
-&lt;/div&gt;
+<p>To change styles use CSS classes of plugin&#39;s elements:</p>
+<pre><code class="hljs lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"abigimage-overlay"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"abigimage-layout"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"abigimage-box"</span>&gt;</span>
+        <span class="hljs-comment">&lt;!-- prevBtnBox (clickable behind the image, width 50%) --&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"abigimage-prevBtnBox"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+        <span class="hljs-comment">&lt;!-- closeBtnBox (clickable behind the image, width 50%) --&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"abigimage-closeBtnBox"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"abigimage-img"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"abigimage-imgNext"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"abigimage-imgPrev"</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"abigimage-prevBtn"</span>&gt;</span><span class="hljs-comment">&lt;!-- prevBtnHtml --&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"abigimage-closeBtn"</span>&gt;</span><span class="hljs-comment">&lt;!-- closeBtnHtml --&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"abigimage-bottom"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-
-<h3>Using onopen handler</h3>
-
+<h3 id="using-onopen-handler">Using onopen handler</h3>
 <p>Function, defined as <code>onopen</code> handler, executes in context of plugin, and receives target element as argument. Plugin elements available in this context as properties.</p>
-
-<pre><code>$(function() {
-    $('a[href$=".jpg"]').abigimage({
-        bottomCSS: {
-            fontSize: '2em'
-        },
-        onopen: function (target) {
-            this.bottom.html(
-                $('img', target).attr('alt')
-            );
-        }
-    });
+<pre><code class="hljs lang-js">$(<span class="hljs-string">'a[href$=".jpg"]'</span>).abigimage({
+    onopen: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(target)</span> </span>{
+        <span class="hljs-keyword">this</span>.bottom.html(
+            $(<span class="hljs-string">'img'</span>, target).attr(<span class="hljs-string">'alt'</span>)
+        );
+    }
 });
 </code></pre>
-
-<h3>Using data-href attribute</h3>
-
-<p>If you want different link for plugin's big image and for non-javascript clients (search engines or browsers without javascript) - use <code>data-href</code> attribute:</p>
-
-<pre><code>&lt;a href="/non_javascript_link.html" data-href="/images/big/myimage.jpg"&gt; ... &lt;/a&gt;</code></pre>
-
+<h3 id="using-custom-links-with-data-href-attribute">Using custom links with data-href attribute</h3>
+<p>If you want different link for plugin&#39;s big image and for non-javascript clients (search engines or browsers without javascript) - use <code>data-href</code> attribute:</p>
+<pre><code class="hljs lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"/non_javascript_link.html"</span> <span class="hljs-attribute">data-href</span>=<span class="hljs-value">"/images/big/myimage.jpg"</span>&gt;</span> ... <span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+</code></pre>
 <p>Also, you can use <code>data-href</code> attribute on any element, not only links.</p>
+<h3 id="static-methods">Static methods</h3>
+<ul>
+<li><code>open([src], [index], [sel])</code> - open image by URL or index.</li>
+<li><code>next([sel])</code> - open next image.</li>
+<li><code>prev([sel])</code> - open previous image.</li>
+<li><code>close([sel])</code> - close image.</li>
+<li><code>unbind([sel])</code> - unbind plugin events.</li>
+</ul>
+<pre><code class="hljs lang-js"><span class="hljs-comment">/* open image by URL */</span>
+$.abigimage.open(<span class="hljs-string">'/awesomeimage.jpg'</span>);
 
-<h3>Static methods</h3>
+<span class="hljs-comment">/* open image by index */</span>
+$.abigimage.open(<span class="hljs-number">2</span>);
 
-<pre><code>/* open image by URL */
-$.abigimage.open('/some_image.jpg');
+<span class="hljs-comment">/* open image by URL at specified position */</span>
+$.abigimage.open(<span class="hljs-string">'/awesomeimage.jpg'</span>, <span class="hljs-number">5</span>);
 
-/* open image by index in current list */
-$.abigimage.open(5);
-
-/* open image by URL at specified position in current list */
-$.abigimage.open('/some_image.jpg', 5);
-
-/* open next image */
+<span class="hljs-comment">/* open next image */</span>
 $.abigimage.next();
 
-/* open previous image */
+<span class="hljs-comment">/* open previous image */</span>
 $.abigimage.prev();
 
-/* close image */
+<span class="hljs-comment">/* close image */</span>
 $.abigimage.close();
 
-/* unbind abigimage events */
+<span class="hljs-comment">/* unbind plugin events */</span>
 $.abigimage.unbind();
 </code></pre>
+<p>All static methods by default tries to execute on current opened plugin insatnce, if no instances opened, tries to execute on last created instance. You can specify instance by passing it&#39;s selector in last argument <code>sel</code>.</p>
+<pre><code class="hljs lang-js">$myimgs1 = $(<span class="hljs-string">'.myimgs1 a'</span>).abigimage();
+$myimgs2 = $(<span class="hljs-string">'.myimgs2 a'</span>).abigimage();
 
-
-
-<h3>Changes</h3>
-
+$.abigimage.open(<span class="hljs-string">'/awesomeimage.jpg'</span>, <span class="hljs-literal">null</span>, $myimgs2);
+$.abigimage.unbind($myimgs1);
+</code></pre>
+<h2 id="changes">Changes</h2>
 <ul>
-    <li><b>1.3.1</b> - fixed image caching, added <code>unbind</code> method.</li>
+<li><strong>2.0.0</strong> - fixed multiple plugin instances context, added double-tap zoom, optimized touch event handlers, styles moved to CSS file, license changed to MIT.</li>
+<li><strong>1.3.1</strong> - fixed image caching, added <code>unbind</code> method.</li>
 </ul>
+<h2 id="mit-license">MIT License</h2>
+<p>Copyright (c) 2014-2016 Maksim Krylosov <a href="&#x6d;&#97;&#105;&#x6c;&#116;&#111;&#x3a;&#97;&#101;&#113;&#x75;&#x69;&#x74;&#x65;&#x72;&#x6e;&#117;&#115;&#x40;&#103;&#109;&#97;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#97;&#101;&#113;&#x75;&#x69;&#x74;&#x65;&#x72;&#x6e;&#117;&#115;&#x40;&#103;&#109;&#97;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a></p>
 
 
-
-<h3>P. S.</h3>
-
-<p>I WANT your comments, feature requests, bug reports, suggestions, thoughts... on <a href="https://github.com/Aequiternus/ABigImage">GitHub</a>.</p>
-
-
-
-        </div>
-
-
-
-<link rel="stylesheet" href="http://aeqdev.com/tools/css/default/adefault-light.min.css">
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/googlecode.min.css">
-
-<script src="http://code.jquery.com/jquery.min.js"></script>
-<script src="abigimage.jquery.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
-<!--<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
+</div>
 
 <script>
-    $(function() {
-        $('a[href$=".jpg"]').abigimage({
-            onopen: function (target) {
-                this.bottom.html(
-                    $('img', target).attr('alt')
-                );
-            }
-        });
-    });
-
-    hljs.initHighlightingOnLoad();
-
-    (adsbygoogle = window.adsbygoogle || []).push({});
-
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -320,5 +294,5 @@ $.abigimage.unbind();
     ga('send', 'pageview');
 </script>
 
-    </body>
+</body>
 </html>

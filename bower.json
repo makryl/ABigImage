@@ -1,11 +1,11 @@
 {
-  "name": "abigimage",
-  "version": "2.0.0",
-  "author": "Maksim Krylosov <aequiternus@gmail.com> (http://aeqdev.com/)",
-  "license": "MIT",
-  "homepage": "http://aeqdev.com/tools/js/abigimage/",
-  "bugs": "https://github.com/makryl/ABigImage/issues",
+  "name": "jquery-abigimage",
   "description": "ABigImage - view big versions of images. Fit mobile devices. Uses CSS3 transform and transition for smooth touch sliding. Touch slide left or right opens next or previous image, touch slide up or down closes image. Multi-touch and double-tap zoom. Clicking image opens next one, clicking left side opens previous, clicking right side closes image. Hotkeys for next, previous and close buttons. Closing after viewing of all images. Preloading of next and previous images. Uses link's `href` or `data-href` attribute for large images. Fully customizable styles. Customizable bottom area. Customizable `onopen` and `onclose` event.",
+  "main": "abigimage.jquery.min.js",
+  "authors": [
+    "Maksim Krylosov <aequiternus@gmail.com> (http://aeqdev.com/)"
+  ],
+  "license": "MIT",
   "keywords": [
     "jquery-plugin",
     "ecosystem:jquery",
@@ -31,24 +31,25 @@
     "html5",
     "jquery"
   ],
-  "main": "abigimage.jquery.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/makryl/ABigImage.git"
   },
+  "moduleType": [],
+  "homepage": "http://aeqdev.com/tools/js/abigimage/",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "tpl",
+    "img",
+    "Gruntfile.js",
+    "index.html",
+    "package.json"
+  ],
   "dependencies": {
     "jquery": ">=1.9"
-  },
-  "devDependencies": {
-    "grunt": "*",
-    "grunt-banner": "*",
-    "grunt-bump": "*",
-    "grunt-contrib-clean": "*",
-    "grunt-contrib-cssmin": "*",
-    "grunt-contrib-uglify": "*",
-    "grunt-file-info": "*",
-    "grunt-markdown": "*",
-    "grunt-npm": "*",
-    "grunt-replace": "*"
   }
 }
