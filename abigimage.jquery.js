@@ -18,7 +18,8 @@
         prevBtn     = $('<div>').addClass('abigimage-prevBtn')    .appendTo(layout),
         closeBtn    = $('<div>').addClass('abigimage-closeBtn')   .appendTo(layout),
         bottom      = $('<div>').addClass('abigimage-bottom')     .appendTo(layout),
-        boxe        = box[0];
+        boxe        = box[0],
+        $w          = $(window);
 
     $.fn.abigimage = function(options) {
         var plugin = new ABigImage(this, options);
@@ -33,31 +34,33 @@
     };
 
     $.fn.abigimage.defaults = {
-        fadeIn:             'fast',
-        fadeOut:            'fast',
-        slideWidth:         .4,
-        slideVelocity:      .4,
-        zoomMin:            1.5,
-        zoomMax:            5,
-        doubleTapInterval:  400,
-        prevBtnHtml:        '&larr;',
-        closeBtnHtml:       'x',
-        keyNext:            [13 /* enter */, 32 /* space */, 39 /* right */, 40 /* down */],
-        keyPrev:            [8 /* backspace */, 37 /* left */, 38 /* up */],
-        keyClose:           [27 /* escape */, 35 /* end */, 36 /* home */],
-        onopen:             null,
-        onclose:            null
+        fadeIn:               'fast',
+        fadeOut:              'fast',
+        slideWidth:           .4,
+        slideVelocity:        .4,
+        zoomMin:              1.5,
+        zoomMax:              5,
+        zoomScrollMultiplier: 1.25,
+        zoomMoveViewport:     0.9,
+        doubleTapInterval:    400,
+        prevBtnHtml:          '&larr;',
+        closeBtnHtml:         'x',
+        keyNext:              [13 /* enter */, 32 /* space */, 39 /* right */, 40 /* down */],
+        keyPrev:              [8 /* backspace */, 37 /* left */, 38 /* up */],
+        keyClose:             [27 /* escape */, 35 /* end */, 36 /* home */],
+        onopen:               null,
+        onclose:              null
     };
 
     $.abigimage = {
-        overlay:            overlay,
-        layout:             layout,
-        prevBtnBox:         prevBtnBox,
-        prevBtn:            prevBtn,
-        closeBtnBox:        closeBtnBox,
-        closeBtn:           closeBtn,
-        box:                box,
-        bottom:             bottom,
+        overlay:              overlay,
+        layout:               layout,
+        prevBtnBox:           prevBtnBox,
+        prevBtn:              prevBtn,
+        closeBtnBox:          closeBtnBox,
+        closeBtn:             closeBtn,
+        box:                  box,
+        bottom:               bottom,
 
         open: function(src, index, sel) {
             ((sel && sel._abigimage) || current || last).open(src, index);
@@ -122,6 +125,9 @@
         listen(boxe, 'msTransitionEnd', transitionEnd);
         listen(boxe, 'oTransitionEnd', transitionEnd);
         listen(boxe, 'transitionend', transitionEnd);
+
+        listen(boxe, 'wheel', zoomwheel);
+        listen(boxe, 'mousemove', zoomwheel);
     }
 
     function ABigImage(elements, options) {
@@ -241,7 +247,10 @@
             this.prev();
         } else if (this.keyClose.indexOf(keyCode) != -1) {
             this.close();
+        } else {
+            return false;
         }
+        return true;
     };
 
     ABigImage.prototype.nextIndex = function() {
@@ -266,8 +275,9 @@
 
     function documentKeydown(event) {
         if (current) {
-            prevent(event);
-            current.key(event.which);
+            if (current.key(event.which)) {
+                prevent(event);
+            }
         }
     }
 
@@ -287,6 +297,10 @@
         dy,
         iw,
         ih,
+        ww,
+        wh,
+        mx,
+        my,
 
         dstart,
         start,
@@ -312,8 +326,7 @@
             width = box.width() * 0.34;
             height = box.height();
             minD = current.slideWidth * width;
-            iw = current.img.width();
-            ih = current.img.height();
+            initSizes();
         }
         sx = x;
         sy = y;
@@ -327,19 +340,20 @@
     function touchmove(e) {
         if (!current) return;
 
-        dx = (med(e.touches, 'X') - med(touches, 'X'));
-        dy = (med(e.touches, 'Y') - med(touches, 'Y'));
-        x = sx + dx / s;
-        y = sy + dy / s;
         if (e.touches.length > 1) {
-            s = Math.max(1, ss * (dis(e) / k));
+            s = ss * (dis(e) / k);
+            if (s < 1) {
+                s = 0.333 * s * s * s + 0.666;
+            }
         }
-        if (s > current.zoomMin) {
-            var mx = 0.5 * (iw - (iw / s));
-            var my = 0.5 * (ih - (ih / s));
-            x = Math.max(-mx, Math.min(mx, x));
-            y = Math.max(-my, Math.min(my, y));
-        } else {
+
+        dx = (ww - med(touches, 'X')) / ss - (ww - med(e.touches, 'X')) / s;
+        dy = (wh - med(touches, 'Y')) / ss - (wh - med(e.touches, 'Y')) / s;
+
+        x = sx + dx;
+        y = sy + dy;
+
+        if (s <= current.zoomMin && e.touches.length <= 1) {
             if (null === vert) {
                 var dv = Math.abs(dy) - Math.abs(dx);
                 if (Math.abs(dv) > 2) {
@@ -362,12 +376,30 @@
         var end = (new Date()).getTime();
         var time = end - start;
 
-        if (!e.touches.length) {
+        if (e.touches.length) {
+            sx = x;
+            sy = y;
+            ss = s;
+            dx = 0;
+            dy = 0;
+            touches = e.touches;
+        } else {
             if (s <= current.zoomMin) {
                 if (time <= 1 || (dx >= -1 && dx <= 1 && dy >= -1 && dy <= 1)) {
                     if (start - dstart <= current.doubleTapInterval) {
+                        s = current.zoomMax;
+                        var tx = med(touches, 'X');
+                        var ty = med(touches, 'Y');
+                        x += (ww - tx) / ss - (ww - tx) / s;
+                        y += (wh - ty) / ss - (wh - ty) / s;
+
+                        mx = iw - ww / s;
+                        my = ih - wh / s;
+                        x = mx <= 0 ? 0 : Math.max(-mx, Math.min(mx, x));
+                        y = my <= 0 ? 0 : Math.max(-my, Math.min(my, y));
+
                         current.box.addClass('abigimage-box-zoom');
-                        slideAnimate(x, y, current.zoomMax, true);
+                        slideAnimate(x, y, s, true);
                     } else {
                         slideAnimate(0, 0, 1, true);
                     }
@@ -401,11 +433,16 @@
                         }
                     }
                 }
-            } else if (s > current.zoomMax) {
-                slideAnimate(x, y, current.zoomMax, true);
-            } else if (s > current.zoomMin) {
+            } else {
                 if (end - dstart <= current.doubleTapInterval) {
                     slideBack();
+                } else {
+                    s = Math.max(1, Math.min(current.zoomMax, s));
+                    mx = iw - ww / s;
+                    my = ih - wh / s;
+                    x = mx <= 0 ? 0 : Math.max(-mx, Math.min(mx, x));
+                    y = my <= 0 ? 0 : Math.max(-my, Math.min(my, y));
+                    slideAnimate(x, y, s, true);
                 }
             }
         }
@@ -417,7 +454,7 @@
     function med(ts, c) {
         var p = 0;
         for (var t = 0, l = ts.length; t < l; t++) {
-            p += ts[t]['page' + c];
+            p += ts[t]['client' + c];
         }
         return p / l;
     }
@@ -427,6 +464,13 @@
             Math.pow(e.touches[0].pageX - e.touches[1].pageX, 2) +
             Math.pow(e.touches[0].pageY - e.touches[1].pageY, 2)
         );
+    }
+
+    function initSizes() {
+        iw = current.img.width() / 2;
+        ih = current.img.height() / 2;
+        ww = $w.width() / 2;
+        wh = $w.height() / 2;
     }
 
     function slideNext() {
@@ -473,6 +517,40 @@
             ontr = null;
             f();
         }
+    }
+
+    function zoomwheel(e) {
+        if (!current) return;
+
+        initSizes();
+
+        if (e.deltaY > 0) {
+            s /= current.zoomScrollMultiplier;
+        } else if (e.deltaY < 0) {
+            s *= current.zoomScrollMultiplier;
+        }
+        s = Math.max(1, Math.min(current.zoomMax, s));
+
+        x = 0;
+        y = 0;
+
+        mx = iw - ww / s;
+        my = ih - wh / s;
+
+        if (mx > 0)
+        {
+            x = (ww - e.clientX) / (current.zoomMoveViewport * ww / iw) - (ww - e.clientX) / s;
+            x = Math.max(-mx, Math.min(mx, x));
+        }
+
+        if (my > 0)
+        {
+            y = (wh - e.clientY) / (current.zoomMoveViewport * wh / ih) - (wh - e.clientY) / s;
+            y = Math.max(-my, Math.min(my, y));
+        }
+
+        slideAnimate(x, y, s, true);
+        prevent(e);
     }
 
 }(jQuery));

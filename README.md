@@ -2,7 +2,7 @@
 
 `ABigImage` is jQuery plugin for viewing big versions of images.
 
-Current version **2.0.0** (2016-02-14).
+Current version **2.0.1** (2016-06-07).
 
 <div class="colr">
     <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
@@ -13,8 +13,8 @@ Current version **2.0.0** (2016-02-14).
     </form>
 </div>
 
-* [abigimage.jquery.js](abigimage.jquery.js) (14.1 kB) [min](abigimage.jquery.min.js) (5.9 kB, gzipped 2.2 kB)
-* [abigimage.jquery.css](abigimage.jquery.css) (2.6 kB) [min](abigimage.jquery.min.css) (1.5 kB, gzipped 549 bytes)
+* [abigimage.jquery.js](abigimage.jquery.js) (16.2 kB) [min](abigimage.jquery.min.js) (6.7 kB, gzipped 2.5 kB)
+* [abigimage.jquery.css](abigimage.jquery.css) (2.6 kB) [min](abigimage.jquery.min.css) (1.5 kB, gzipped 550 bytes)
 * Fork at [Github](https://github.com/makryl/ABigImage)
 
 ## Features
@@ -72,6 +72,7 @@ $(function(){
 - `slideVelocity` - slide velocity to switch or close image (pixels per millisecond, default: 0.4).
 - `zoomMin` - minimal zoom that will hold (default: 1.5).
 - `zoomMax` - maximal zoom (default: 5).
+- `zoomScrollMultiplier` - how much zoom on mouse scroll (default: 1.25).
 - `doubleTapInterval` - zoom double-tap interval (milliseconds, default: 400).
 - `prevBtnHtml` - html of "previous" button (default: `&larr;`).
 - `closeBtnHtml` - html of "close" button (default: `x`).
@@ -168,6 +169,7 @@ $.abigimage.unbind($myimgs1);
 
 ## Changes
 
+- **2.1.0** - improved zoom positioning, added mouse scroll zoom, fixed prevention of non-plugin's hotkeys.
 - **2.0.0** - fixed multiple plugin instances context, added double-tap zoom, optimized touch event handlers, styles moved to CSS file, license changed to MIT.
 - **1.3.1** - fixed image caching, added `unbind` method.
 

@@ -111,7 +111,7 @@
 
 <h1 id="abigimage">ABigImage</h1>
 <p><code>ABigImage</code> is jQuery plugin for viewing big versions of images.</p>
-<p>Current version <strong>2.0.0</strong> (2016-02-14).</p>
+<p>Current version <strong>2.0.1</strong> (2016-06-07).</p>
 <div class="colr">
     <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
         <input type="hidden" name="cmd" value="_s-xclick">
@@ -122,8 +122,8 @@
 </div>
 
 <ul>
-<li><a href="abigimage.jquery.js">abigimage.jquery.js</a> (14.1 kB) <a href="abigimage.jquery.min.js">min</a> (5.9 kB, gzipped 2.2 kB)</li>
-<li><a href="abigimage.jquery.css">abigimage.jquery.css</a> (2.6 kB) <a href="abigimage.jquery.min.css">min</a> (1.5 kB, gzipped 549 bytes)</li>
+<li><a href="abigimage.jquery.js">abigimage.jquery.js</a> (16.2 kB) <a href="abigimage.jquery.min.js">min</a> (6.7 kB, gzipped 2.5 kB)</li>
+<li><a href="abigimage.jquery.css">abigimage.jquery.css</a> (2.6 kB) <a href="abigimage.jquery.min.css">min</a> (1.5 kB, gzipped 550 bytes)</li>
 <li>Fork at <a href="https://github.com/makryl/ABigImage">Github</a></li>
 </ul>
 <h2 id="features">Features</h2>
@@ -153,7 +153,7 @@
 <p>Live example, where I'm using and testing this plugin at the moment: <a href="http://kawaiinyan.com/" target="_blank">kawaiinyan.com</a>.</p>
 
 <script src="http://code.jquery.com/jquery.min.js"></script>
-<script src="abigimage.jquery.min.js"></script>
+<script src="abigimage.jquery.js"></script>
 <link rel="stylesheet" href="abigimage.jquery.min.css">
 
 <script>
@@ -196,6 +196,7 @@
 <li><code>slideVelocity</code> - slide velocity to switch or close image (pixels per millisecond, default: 0.4).</li>
 <li><code>zoomMin</code> - minimal zoom that will hold (default: 1.5).</li>
 <li><code>zoomMax</code> - maximal zoom (default: 5).</li>
+<li><code>zoomScrollMultiplier</code> - how much zoom on mouse scroll (default: 1.25).</li>
 <li><code>doubleTapInterval</code> - zoom double-tap interval (milliseconds, default: 400).</li>
 <li><code>prevBtnHtml</code> - html of &quot;previous&quot; button (default: <code>&amp;larr;</code>).</li>
 <li><code>closeBtnHtml</code> - html of &quot;close&quot; button (default: <code>x</code>).</li>
@@ -275,11 +276,12 @@ $.abigimage.unbind($myimgs1);
 </code></pre>
 <h2 id="changes">Changes</h2>
 <ul>
+<li><strong>2.1.0</strong> - improved zoom positioning, added mouse scroll zoom, fixed prevention of non-plugin&#39;s hotkeys.</li>
 <li><strong>2.0.0</strong> - fixed multiple plugin instances context, added double-tap zoom, optimized touch event handlers, styles moved to CSS file, license changed to MIT.</li>
 <li><strong>1.3.1</strong> - fixed image caching, added <code>unbind</code> method.</li>
 </ul>
 <h2 id="mit-license">MIT License</h2>
-<p>Copyright (c) 2014-2016 Maksim Krylosov <a href="&#x6d;&#97;&#105;&#x6c;&#116;&#111;&#x3a;&#97;&#101;&#113;&#x75;&#x69;&#x74;&#x65;&#x72;&#x6e;&#117;&#115;&#x40;&#103;&#109;&#97;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#97;&#101;&#113;&#x75;&#x69;&#x74;&#x65;&#x72;&#x6e;&#117;&#115;&#x40;&#103;&#109;&#97;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a></p>
+<p>Copyright (c) 2014-2016 Maksim Krylosov <a href="&#109;&#x61;&#x69;&#x6c;&#116;&#x6f;&#58;&#97;&#x65;&#113;&#x75;&#x69;&#x74;&#x65;&#114;&#110;&#117;&#x73;&#x40;&#x67;&#109;&#x61;&#x69;&#108;&#x2e;&#99;&#x6f;&#109;">&#97;&#x65;&#113;&#x75;&#x69;&#x74;&#x65;&#114;&#110;&#117;&#x73;&#x40;&#x67;&#109;&#x61;&#x69;&#108;&#x2e;&#99;&#x6f;&#109;</a></p>
 
 
 </div>
