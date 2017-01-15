@@ -10,7 +10,19 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            /*margin: 0;*/
+            /*padding: 0;*/
+            /*overflow: hidden;*/
         }
+
+        /*.container {*/
+            /*position: fixed;*/
+            /*left: 0;*/
+            /*right: 0;*/
+            /*top: 0;*/
+            /*bottom: 0;*/
+            /*overflow: auto;*/
+        /*}*/
 
         .wrapper {
             max-width: 200mm;
@@ -31,6 +43,25 @@
 
         .clearfix {
             clear: both;
+        }
+
+        .example {
+            overflow: hidden;
+            clear: both;
+        }
+
+        .example a {
+            display: block;
+            float: left;
+            margin: 0 .5em .5em 0;
+        }
+
+        .example img {
+            display: block;
+        }
+
+        .example span {
+            display: none;
         }
 
         /* Highlight.js */
@@ -107,10 +138,12 @@
 </head>
 <body>
 
+<div class="container">
 <div class="wrapper">
 
 <%=content%>
 
+</div>
 </div>
 
 <script>

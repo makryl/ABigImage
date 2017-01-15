@@ -1,8 +1,11 @@
 <h2 class="clearfix">Example</h2>
 
-<p>
+<p class="example">
     <a href="img/1-big.jpg"><img src="img/1-small.jpg" alt="First image"></a>
-    <a href="img/2-big.jpg"><img src="img/2-small.jpg" alt="Second image"></a>
+    <a href="img/2-big.jpg">
+        <img src="img/2-small.jpg" alt="Second image. Scroll down me, please!">
+        <span><br>Under bottom area here.</span>
+    </a>
     <a href="img/3-big.jpg"><img src="img/3-small.jpg" alt="Third image"></a>
     <a href="img/4-big.jpg"><img src="img/4-small.jpg" alt="Fourth image"></a>
 </p>
@@ -17,7 +20,10 @@
     $('a[href$=".jpg"]').abigimage({
         onopen: function(target) {
             this.bottom.html(
-                $('img', target).attr('alt')
+                /* bottom caption */
+                $('img', target).attr('alt') +
+                /* under bottom area */
+                ($('span', target).html() || '')
             );
         }
     });

@@ -1,11 +1,11 @@
 {
   "name": "abigimage",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "author": "Maksim Krylosov <aequiternus@gmail.com> (http://aeqdev.com/)",
   "license": "MIT",
   "homepage": "http://aeqdev.com/tools/js/abigimage/",
   "bugs": "https://github.com/makryl/ABigImage/issues",
-  "description": "ABigImage - view big versions of images. Fit mobile devices. Uses CSS3 transform and transition for smooth touch sliding. Touch slide left or right opens next or previous image, touch slide up or down closes image. Multi-touch and double-tap zoom. Clicking image opens next one, clicking left side opens previous, clicking right side closes image. Hotkeys for next, previous and close buttons. Closing after viewing of all images. Preloading of next and previous images. Uses link's `href` or `data-href` attribute for large images. Fully customizable styles. Customizable bottom area. Customizable `onopen` and `onclose` event.",
+  "description": "ABigImage - view big versions of images. Fit mobile devices. Uses CSS3 transform and transition for smooth touch sliding. Touch slide left or right opens next or previous image, touch slide up or down closes image. Multi-touch and double-tap zoom, zoom out closes image. Clicking image opens next one, clicking left side opens previous, clicking right side closes image. Hotkeys for next, previous and close buttons. Closing after viewing of all images. Preloading of next and previous images. Images counter. Uses link's `href` or `data-href` attribute for large images. Fully customizable styles. Customizable, scrolling down bottom area. Customizable `onopen` and `onclose` event.",
   "keywords": [
     "jquery-plugin",
     "ecosystem:jquery",
