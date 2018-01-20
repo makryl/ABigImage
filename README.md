@@ -2,7 +2,7 @@
 
 `ABigImage` is jQuery plugin for viewing big versions of images.
 
-Current version **2.1.0** (2017-01-15).
+Current version **2.1.1** (2018-01-20).
 
 <div class="colr">
     <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
@@ -13,8 +13,8 @@ Current version **2.1.0** (2017-01-15).
     </form>
 </div>
 
-* [abigimage.jquery.js](abigimage.jquery.js) (26.9 kB) [min](abigimage.jquery.min.js) (10.2 kB, gzipped 3.6 kB)
-* [abigimage.jquery.css](abigimage.jquery.css) (6 kB) [min](abigimage.jquery.min.css) (3.1 kB, gzipped 802 bytes)
+* [abigimage.jquery.js](abigimage.jquery.js) (30.1 kB) [min](abigimage.jquery.min.js) (10.2 kB, gzipped 3.6 kB)
+* [abigimage.jquery.css](abigimage.jquery.css) (6 kB) [min](abigimage.jquery.min.css) (3.1 kB, gzipped 801 bytes)
 * Fork at [Github](https://github.com/makryl/ABigImage)
 
 ## Features
@@ -187,10 +187,11 @@ $.abigimage.unbind($myimgs1);
 
 ## Changes
  
+- **2.1.1** - fixed init in `head`, plugin now has lazy creation of it's dom.
 - **2.1.0** - improved animations for not fully loaded images, improved zoom positioning, added mouse scroll zoom, added scrolling down bottom area, added zoom out closing, added next and zoom buttons, added loading spinner, added images counter, fixed prevention of non-plugin's hotkeys.
 - **2.0.0** - fixed multiple plugin instances context, added double-tap zoom, optimized touch event handlers, styles moved to CSS file, license changed to MIT.
 - **1.3.1** - fixed image caching, added `unbind` method.
 
 ## MIT License
 
-Copyright (c) 2014-2016 Maksim Krylosov <aequiternus@gmail.com>
+Copyright (c) 2014-2018 Maksim Krylosov <aequiternus@gmail.com>
